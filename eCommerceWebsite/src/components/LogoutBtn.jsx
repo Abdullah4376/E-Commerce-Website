@@ -1,10 +1,12 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 import { logout } from '../features/productSlice'
 
 function LogoutBtn() {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const logoutHandler = () => {
         authService.logout().then(() => {
             dispatch(logout())
@@ -15,9 +17,9 @@ function LogoutBtn() {
 
 
     return(
-        <button className="font-poppins px-9 font-light text-base duration-500 hover:border-[#E5E7EB] hover:bg-transparent hover:text-black border-[#5F3AFC] border-2 py-[10px] bg-[#5F3AFC] text-white rounded-lg">
+        <Link className="font-poppins hover:text-[#5F3AFC] duration-300">
             Logout
-        </button>
+        </Link>
     )
 }
 

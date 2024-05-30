@@ -1,5 +1,5 @@
 import React from "react";
-import { logoutBtn } from './index.js'
+import { LogoutBtn } from './index.js'
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -60,6 +60,11 @@ function Header() {
                                         </li>
                                     ) : null
                                 ))}
+                                {authStatus && (
+                                    <li className="mx-5">
+                                        <LogoutBtn />
+                                    </li>
+                                )}
                             </ul>
                         </div>
                         <div className="sec-r flex justify-between items-center font-medium font-poppins">
