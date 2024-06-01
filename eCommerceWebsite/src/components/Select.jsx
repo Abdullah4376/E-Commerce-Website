@@ -11,7 +11,7 @@ function Select({
     return(
         <div className="w-full">
             {label && <label htmlFor={id} className="" ></label>}
-            <select {...props} id={id} className={` ${className}`}>
+            <select {...props} id={id} className={` ${className}`} ref={ref}>
                 {/* if options are there, then we will loop */}
                 {options?.map((option, index) => (
                     <option key={index} value={option}>{option}</option>

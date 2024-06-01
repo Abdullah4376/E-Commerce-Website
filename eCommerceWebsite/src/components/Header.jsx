@@ -35,6 +35,11 @@ function Header() {
             active: !authStatus
         },
         {
+            name: "Signup",
+            slug: "/signup",
+            active: !authStatus,
+        },
+        {
             name: 'Shopping Cart',
             slug: '/shopping-cart',
             active: !authStatus
