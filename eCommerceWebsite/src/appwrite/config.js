@@ -1,116 +1,136 @@
 import conf from '../conf/conf.js';
-import {Client, ID, Databases, Storage, Query} from 'appwrite';
+import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service{
     client = new Client();
-    database;
-    storage;
-    id = ID.unique();
-
-    constructor() {
+    databases;
+    bucket;
+    
+    constructor(){
         this.client
-            .setEndpoint(conf.appwriteUrl)
-            .setProject(conf.appwriteProjectId);
-        this.database = new Databases(this.client);
-        this.storage = new Storage(this.client);
+        .setEndpoint(conf.appwriteUrl)
+        .setProject(conf.appwriteProjectId);
+        this.databases = new Databases(this.client);
+        this.bucket = new Storage(this.client);
     }
 
-    async addProduct ({title, color, quantity, price, productImages, stock, description, brand, userID, id = this.id, status}) {
+    async addProduct({title, slug, content, featuredImage, status, UserID}){
         try {
-            await this.database.createDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, id, {
-                title,
-                color,
-                quantity,
-                price,
-                productImages,
-                stock,
-                description,
-                brand,
-                userID,
-                status
-            });
-            return 'Product Added Successfully!'
+            return await this.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                slug,
+                {
+                    title,
+                    content,
+                    featuredImage,
+                    status,
+                    UserID,
+                }
+            )
         } catch (error) {
-            console.log('Error in appwrite/config.js/addProductFunction', error);
-            return 'An Error Occured While Adding This Product!'
+            console.log("Appwrite serive :: createPost :: error", error);
         }
     }
 
-    async updateProduct ({title, color, quantity, price, productImages, stock, description, brand, userID, id = this.id, status}) {
+    async updateProduct(slug, {title, content, featuredImage, status}){
         try {
-            await this.database.updateDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, id, {
-                title,
-                color,
-                quantity,
-                price,
-                productImages,
-                stock,
-                description,
-                brand,
-                userID,
-                status
-            });
-            return 'Product Updated Successfully!'
+            return await this.databases.updateDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                slug,
+                {
+                    title,
+                    content,
+                    featuredImage,
+                    status,
+
+                }
+            )
         } catch (error) {
-            console.log('Error in appwrite/config.js/updateProductFunction', error);
-            return 'An Error Occured While Updating This Product!'
+            console.log("Appwrite serive :: updatePost :: error", error);
         }
     }
 
-    async deleteProduct ({id = this.id}) {
+    async deleteProduct(slug){
         try {
-            await this.database.deleteDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, id);
-            return 'Product Deleted Successfully!'
+            await this.databases.deleteDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                slug
+            
+            )
+            return true
         } catch (error) {
-            console.log('Error in appwrite/config.js/deleteProductFunction', error);
-            return 'An Error Occured While Deleting This Product!'
+            console.log("Appwrite serive :: deletePost :: error", error);
+            return false
         }
     }
 
-    async getProduct({id = this.id}) {
+    async getProduct(slug){
         try {
-            return await this.database.getDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, id);
+            return await this.databases.getDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                slug
+            )
         } catch (error) {
-            console.log('Error in appwrite/config.js/getProductFunction', error);
-            return 'An Error Occured While Getting This Product!'
+            console.log("Appwrite serive :: getPost :: error", error);
+            return false
         }
     }
 
-    async getProducts (queries = [Query.equal('status', 'public')]) {
+    async getProducts(queries = [Query.equal("status", "active")]){
         try {
-            return await this.database.listDocuments(conf.appwriteDatabaseId, conf.appwriteCollectionId, queries)
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                queries,
+                
+
+            )
         } catch (error) {
-            console.log('Error in appwrite/config.js/getProductsFunction', error);
-            return 'An Error Occured While Getting All The Products!'
+            console.log("Appwrite serive :: getPosts :: error", error);
+            return false
         }
     }
 
-    // File upload services:
+    // file upload service
 
-    async uploadFile (file) {
+    async uploadFile(file){
         try {
-            await this.storage.createFile(conf.appwriteBucketId, ID.unique(), file)
-            return 'File Uploaded Successfully!'
+            return await this.bucket.createFile(
+                conf.appwriteBucketId,
+                ID.unique(),
+                file
+            )
         } catch (error) {
-            console.log('Error in appwrite/config.js/uploadFileFunction', error);
-            return 'An Error Occured While Uploading the Image!';
+            console.log("Appwrite serive :: uploadFile :: error", error);
+            return false
         }
     }
 
-    async deleteFile (fileID) {
+    async deleteFile(fileId){
         try {
-            await this.storage.deleteFile(conf.appwriteBucketId, fileID)
-            return 'File Deleted Successfully!'
+            await this.bucket.deleteFile(
+                conf.appwriteBucketId,
+                fileId
+            )
+            return true
         } catch (error) {
-            console.log('Error in appwrite/config.js/deleteFileFunction', error);
-            return 'An Error Occured While Deleting the Image!';
+            console.log("Appwrite serive :: deleteFile :: error", error);
+            return false
         }
     }
 
-    getFilePreview(fileID) {
-        return this.storage.getFilePreview(conf.appwriteBucketId, fileID)
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(
+            conf.appwriteBucketId,
+            fileId
+        )
     }
 }
 
-const service = new Service();
-export default service;
+
+const service = new Service()
+export default service

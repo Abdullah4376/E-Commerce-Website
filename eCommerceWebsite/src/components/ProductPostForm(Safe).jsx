@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect } from "react";
-import { useForm } from 'react-hook-form';
-import { Button, Input, Select } from './index';
-import service from '../appwrite/config';
+import { useForm } from 'react-hook-form'
+import { Button, Input, Select } from './index'
+import appwriteService from '../appwrite/config'
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import RTE from "./RTE";
 
-function ProductPostForm({ post }) {
+
+function ProductPostForm({post}) {
     const navigate = useNavigate();
-    const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm({
+    const {register, handleSubmit, watch, setValue, control, getValues} = useForm({
         defaultValues: {
             title: post?.title || '',
             slug: post?.slug || '',
@@ -18,67 +19,57 @@ function ProductPostForm({ post }) {
     });
 
     const userData = useSelector(state => state.auth.userData);
-
     const submit = async (data) => {
-        console.log('Form data:', data); // Debug log to check form data
+        if (post) {
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
-        try {
-            let dbPost;
-            if (post) {
-                const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
-
-                if (file) {
-                    await service.deleteFile(post.featuredImage);
-                }
-
-                dbPost = await service.updateProduct({
-                    ...data,
-                    id: post.$id, // Pass the existing post ID for updating
-                    featuredImage: file ? file.$id : post.featuredImage    
-                });
-            } else {
-                const file = await service.uploadFile(data.image[0]);
-
-                if (file) {
-                    const fileId = file.$id;
-                    data.featuredImage = fileId;
-                    dbPost = await service.addProduct({
-                        ...data,
-                        UserID: userData.$id
-                    });
-                }
+            if (file) {
+                appwriteService.deleteFile(post.featuredImage);
             }
+
+            const dbPost = await appwriteService.updateProduct(post.$id, {
+                ...data,
+                featuredImage: file ? file.$id : undefined,
+            });
 
             if (dbPost) {
-                // Assuming dbPost returns the document ID after creation/update
-                console.log('Navigation to post:', dbPost.$id); // Debug log for navigation
                 navigate(`/post/${dbPost.$id}`);
-            } else {
-                console.error('Product creation/update failed. dbPost:', dbPost);
             }
-        } catch (error) {
-            console.error('An error occurred while submitting the form:', error);
+        } else {
+            const file = await appwriteService.uploadFile(data.image[0]);
+
+            if (file) {
+                const fileId = file.$id;
+                data.featuredImage = fileId;
+                const dbPost = await appwriteService.addProduct({ ...data, userId: userData.$id });
+
+                if (dbPost) {
+                    navigate(`/post/${dbPost.$id}`);
+                }
+            }
         }
     };
 
+
     const slugTransform = useCallback(value => {
         if (value && typeof value === 'string') {
-            return value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
+            return value.trim().toLowerCase().replace(/^[a-zA-Z\d\s]+/g, '-').replace(/\s/g, '-')
         }
         return '';
     }, []);
 
     useEffect(() => {
-        const subscription = watch((value, { name }) => {
+        const subscription = watch((value, {name}) => {
             if (name === 'title') {
-                setValue('slug', slugTransform(value.title, { shouldValidate: true }));
+                setValue('slug', slugTransform(value.title, {shouldValidate: true}))
             }
         });
 
         return () => {
             subscription.unsubscribe();
-        };
-    }, [watch, slugTransform, setValue]);
+        }
+
+    }, [watch, slugTransform, setValue])
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -89,7 +80,6 @@ function ProductPostForm({ post }) {
                     className="mb-4"
                     {...register("title", { required: true })}
                 />
-                {errors.title && <span className="text-red-500">Title is required</span>}
                 <Input
                     label="Slug :"
                     placeholder="Slug"
@@ -99,7 +89,6 @@ function ProductPostForm({ post }) {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                {errors.slug && <span className="text-red-500">Slug is required</span>}
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
             <div className="w-1/3 px-2">
@@ -110,11 +99,10 @@ function ProductPostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
-                {errors.image && <span className="text-red-500">Image is required</span>}
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={service.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getFilePreview(post.featuredImage)}
                             alt={post.title}
                             className="rounded-lg"
                         />
@@ -126,7 +114,6 @@ function ProductPostForm({ post }) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                {errors.status && <span className="text-red-500">Status is required</span>}
                 <Button type="submit" bgcolor={post ? "bg-green-500" : undefined} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Button>
