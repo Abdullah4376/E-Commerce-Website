@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useForm } from 'react-hook-form'
 import { Button, Input, Select } from './index'
-import service from '../appwrite/config'
+import appwriteService from '../appwrite/config'
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import RTE from "./RTE";
@@ -14,6 +14,7 @@ function ProductPostForm({post}) {
             title: post?.title || '',
             slug: post?.slug || '',
             content: post?.content || '',
+            description: post?.description || '',
             status: post?.status || 'active',
         }
     });
@@ -21,36 +22,35 @@ function ProductPostForm({post}) {
     const userData = useSelector(state => state.auth.userData);
     const submit = async (data) => {
         if (post) {
-            const file = data.image[0] ? service.uploadFile(data.image[0]) : null;
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
-                service.deleteFile(post.featuredImage)
-            }
-            const dbPost = await service.updateProduct(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : console.log('File not found at src/components/ProductPostForm.jsx')    
-            });
-            if (dbPost) {
-                navigate(`post/${dbPost.$id}`);
+                appwriteService.deleteFile(post.featuredImage);
             }
 
+            const dbPost = await appwriteService.updateProduct(post.$id, {
+                ...data,
+                featuredImage: file ? file.$id : undefined,
+            });
+
+            if (dbPost) {
+                navigate(`/post/${dbPost.$id}`);
+            }
         } else {
-            const file = await service.uploadFile(data.image[0]);
+            const file = await appwriteService.uploadFile(data.image[0]);
 
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
-                const dbPost = await service.addProduct({
-                    ...data,
-                    userID: userData.$id
-                });
+                const dbPost = await appwriteService.addProduct({ ...data, userId: userData.$id });
+
                 if (dbPost) {
-                    navigate(`post/${dbPost.$id}`);
+                    navigate(`/post/${dbPost.$id}`);
                 }
             }
-
         }
-    }
+    };
+
 
     const slugTransform = useCallback(value => {
         if (value && typeof value === 'string') {
