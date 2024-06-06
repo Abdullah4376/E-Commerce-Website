@@ -14,7 +14,6 @@ function ProductPostForm({post}) {
             title: post?.title || '',
             slug: post?.slug || '',
             content: post?.content || '',
-            description: post?.description || '',
             status: post?.status || 'active',
         }
     });
