@@ -13,6 +13,7 @@ import AllProducts from './pages/AllProducts.jsx'
 import AddProduct from './pages/AddProduct.jsx'
 import EditProduct from './pages/EditProduct.jsx'
 import Post from './pages/Post.jsx'
+import Dashboard from './pages/Dashboard.jsx'
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
             ),
         },
         {
-            path: "/all-posts",
+            path: "/all-products",
             element: (
                 <Protection authentication>
                     {" "}
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
             ),
         },
         {
-            path: "/add-post",
+            path: "/add-product",
             element: (
                 <Protection authentication>
                     {" "}
@@ -58,13 +59,21 @@ const router = createBrowserRouter([
             ),
         },
         {
-            path: "/edit-post/:slug",
+            path: "/edit-product/:slug",
             element: (
                 <Protection authentication>
                     {" "}
                     <EditProduct />
                 </Protection>
             ),
+        },
+        {
+            path: "/dashboard",
+            element: (
+                <Protection authentication>
+                    <Dashboard />
+                </Protection>
+            )
         },
         {
             path: "/post/:slug",

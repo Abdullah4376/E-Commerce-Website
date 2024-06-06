@@ -17,7 +17,7 @@ function AllProducts() {
             <div className="flex flex-wrap">
                 {products.map((product) => (
                     <div key={product.$id} className="p-2 w-1/4">
-                        <ProductCard post={product} />
+                        <ProductCard {...product} />
                     </div>
                 ))}
             </div>

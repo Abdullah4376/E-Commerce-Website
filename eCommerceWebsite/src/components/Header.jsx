@@ -42,6 +42,11 @@ function Header() {
             name: 'Shopping Cart',
             slug: '/shopping-cart',
             active: !authStatus
+        },
+        {
+            name: 'Add Product',
+            slug: '/add-product',
+            active: authStatus
         }
     ]
 

@@ -5,18 +5,20 @@ import authService from "../appwrite/auth";
 import { logout } from '../features/productSlice'
 
 function LogoutBtn() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const logoutHandler = () => {
         authService.logout().then(() => {
             dispatch(logout())
         }).catch((e) => {
             console.log('Error Using logoutHandler in src/components/LogoutBtn.jsx', e);
-        })
+        });
+        navigate('/')
     }
 
 
     return(
-        <Link to={'/logout'} onClick={logoutHandler} className="font-poppins hover:text-[#5F3AFC] duration-300">
+        <Link onClick={logoutHandler} className="font-poppins hover:text-[#5F3AFC] duration-300">
             Logout
         </Link>
     )

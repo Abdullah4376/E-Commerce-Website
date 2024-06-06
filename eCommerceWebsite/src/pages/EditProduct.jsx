@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 function EditProduct() {
     const [products, setProducts] = useState([]);
-    const {} = useParams();
+    const {slug} = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {

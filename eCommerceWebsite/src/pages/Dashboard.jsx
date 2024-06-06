@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import service from "../appwrite/config.js";
-import ProductCard from "../components/index.js";
+import ProductCard from "../components/ProductCard.jsx";
 
 function Dashboard() {
     const [products, setProducts] = useState([]);
@@ -14,7 +14,7 @@ function Dashboard() {
         .catch(e => console.log(`Error while getting products at src/pages/Home.jsx: ${e}`))
     }, [])
 
-    if (products.length <= 0) {
+    if (products == null || undefined) {
         return (
             <div className="w-full py-8">
                 <h1>Login To Browse Products!</h1>
@@ -31,3 +31,5 @@ function Dashboard() {
         </div>
     )
 }
+
+export default Dashboard;

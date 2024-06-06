@@ -4,6 +4,7 @@ import { Button, Input, Select } from './index'
 import service from '../appwrite/config'
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import RTE from "./RTE";
 
 
 function ProductPostForm({post}) {
@@ -17,7 +18,7 @@ function ProductPostForm({post}) {
         }
     });
 
-    const userData = useSelector(state => state.user.userData);
+    const userData = useSelector(state => state.auth.userData);
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? service.uploadFile(data.image[0]) : null;
@@ -114,7 +115,7 @@ function ProductPostForm({post}) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                <Button type="submit" bgcolor={post ? "bg-green-500" : undefined} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Button>
             </div>
