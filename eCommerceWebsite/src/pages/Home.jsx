@@ -16,7 +16,7 @@ import {
     Brand3,
     Brand4,
     Brand5
-} from './index.js'
+} from '../components/index.js'
 
 function Home() {
     return(

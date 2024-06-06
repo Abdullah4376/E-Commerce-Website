@@ -1,5 +1,5 @@
 import Header from './Header.jsx'
-import Home from './Home.jsx'
+import Home from '../pages/Home.jsx'
 import Footer from './Footer.jsx'
 import Button from './Button.jsx'
 import Input from './Input.jsx'
@@ -8,6 +8,9 @@ import ProductCard from './ProductCard.jsx'
 import Select from './Select.jsx'
 import LogoutBtn from './LogoutBtn.jsx'
 import Signup from './Signup.jsx'
+import ProductPostForm from './ProductPostForm.jsx'
+import RTE from './RTE.jsx'
+import Protection from './AuthLayout(Protection).jsx'
 import img from '../Images/side-photo.jpg'
 import card1 from '../Images/Card1.png'
 import card2 from '../Images/Card2.png'
@@ -34,6 +37,10 @@ export {
     Input,
     Login,
     ProductCard,
+    Signup,
+    ProductPostForm,
+    RTE,
+    Protection,
     Select,
     img,
     card1,

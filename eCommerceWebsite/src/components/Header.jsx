@@ -1,12 +1,11 @@
 import React from "react";
 import { LogoutBtn } from './index.js'
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Header() {
 
     const authStatus = useSelector((state) => state.auth.status);
-    const navigate = useNavigate();
 
     const navItems = [
         {
@@ -58,13 +57,13 @@ function Header() {
                         </div>
                         <div className="sec-m mt-2 font-medium font-poppins">
                             <ul className="flex justify-between content-center ">
-                                {navItems.map(item => (
+                                {navItems.map(item => 
                                     item.active ? (
                                         <li key={item.slug} className="mx-5">
-                                            <Link onClick={() => navigate(item.slug)} className="hover:text-[#5F3AFC] duration-300">{item.name}</Link>
+                                            <Link to={item.slug} className="hover:text-[#5F3AFC] duration-300">{item.name}</Link>
                                         </li>
                                     ) : null
-                                ))}
+                                )}
                                 {authStatus && (
                                     <li className="mx-5">
                                         <LogoutBtn />

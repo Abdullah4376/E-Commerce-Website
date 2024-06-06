@@ -6,7 +6,6 @@ import { logout } from '../features/productSlice'
 
 function LogoutBtn() {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
     const logoutHandler = () => {
         authService.logout().then(() => {
             dispatch(logout())
@@ -17,7 +16,7 @@ function LogoutBtn() {
 
 
     return(
-        <Link className="font-poppins hover:text-[#5F3AFC] duration-300">
+        <Link to={'/logout'} onClick={logoutHandler} className="font-poppins hover:text-[#5F3AFC] duration-300">
             Logout
         </Link>
     )

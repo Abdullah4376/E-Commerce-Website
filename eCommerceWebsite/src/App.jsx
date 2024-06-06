@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import Home from './components/Home';
+import Home from './pages/Home.jsx';
 import { useDispatch } from 'react-redux'
 import authService from './appwrite/auth.js'
 import {login, logout} from './features/productSlice.js'
@@ -27,9 +28,8 @@ function App() {
   return !loading ? (
     <>
       <Header />
-      <main>
-        <Home />
-      </main>
+        
+      <Outlet />
       <Footer />
     </>
   ) : null

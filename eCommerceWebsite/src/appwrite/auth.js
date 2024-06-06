@@ -47,7 +47,7 @@ export class AuthService {
     async login ({email, password}) {
         try {
             // Display a Success message card like appwrite website on the ui
-            return await this.account.createEmailSession(email, password)
+            return await this.account.createEmailPasswordSession(email, password)
         } catch (error) {
             console.log('Error in appwrite/auth.js/loginFunction', error);
         }
