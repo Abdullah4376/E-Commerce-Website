@@ -6,35 +6,33 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import RTE from "./RTE";
 
-function ProductPostForm({ post }) {
+function ProductPostForm({product}) {
     const navigate = useNavigate();
     const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm({
         defaultValues: {
-            title: post?.title || '',
-            slug: post?.slug || '',
-            content: post?.content || '',
-            status: post?.status || 'active',
+            title: product?.title || '',
+            slug: product?.slug || '',
+            content: product?.content || '',
+            status: product?.status || 'active',
         }
     });
 
     const userData = useSelector(state => state.auth.userData);
 
     const submit = async (data) => {
-        console.log('Form data:', data); // Debug log to check form data
-
         try {
             let dbPost;
-            if (post) {
+            if (product) {
                 const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
 
                 if (file) {
-                    await service.deleteFile(post.featuredImage);
+                    await service.deleteFile(product.featuredImage);
                 }
 
                 dbPost = await service.updateProduct({
                     ...data,
-                    id: post.$id, // Pass the existing post ID for updating
-                    featuredImage: file ? file.$id : post.featuredImage    
+                    id: product.$id, // Pass the existing product ID for updating
+                    featuredImage: file ? file.$id : product.featuredImage    
                 });
             } else {
                 const file = await service.uploadFile(data.image[0]);
@@ -51,8 +49,8 @@ function ProductPostForm({ post }) {
 
             if (dbPost) {
                 // Assuming dbPost returns the document ID after creation/update
-                console.log('Navigation to post:', dbPost.$id); // Debug log for navigation
-                navigate(`/post/${dbPost.$id}`);
+                console.log('Navigation to product:', dbPost.$id); // Debug log for navigation
+                navigate(`/product/${dbPost.$id}`);
             } else {
                 console.error('Product creation/update failed. dbPost:', dbPost);
             }
@@ -108,14 +106,14 @@ function ProductPostForm({ post }) {
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image", { required: !post })}
+                    {...register("image", { required: !product })}
                 />
                 {errors.image && <span className="text-red-500">Image is required</span>}
-                {post && (
+                {product && (
                     <div className="w-full mb-4">
                         <img
-                            src={service.getFilePreview(post.featuredImage)}
-                            alt={post.title}
+                            src={service.getFilePreview(product.featuredImage)}
+                            alt={product.title}
                             className="rounded-lg"
                         />
                     </div>
@@ -127,8 +125,8 @@ function ProductPostForm({ post }) {
                     {...register("status", { required: true })}
                 />
                 {errors.status && <span className="text-red-500">Status is required</span>}
-                <Button type="submit" bgcolor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
+                <Button type="submit" bgcolor={product ? "bg-green-500" : undefined} className="w-full">
+                    {product ? "Update" : "Submit"}
                 </Button>
             </div>
         </form>

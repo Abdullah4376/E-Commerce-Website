@@ -29,7 +29,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            console.log("Appwrite serive :: createPost :: error", error);
+            console.log("Appwrite serive :: addProduct :: error", error);
         }
     }
 
@@ -48,7 +48,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            console.log("Appwrite serive :: updatePost :: error", error);
+            console.log("Appwrite serive :: updateProduct :: error", error);
         }
     }
 
@@ -80,14 +80,12 @@ export class Service{
         }
     }
 
-    async getProducts(queries = [Query.equal("status", "active")]){
+    async getProducts(){
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                queries,
                 
-
             )
         } catch (error) {
             console.log("Appwrite serive :: getPosts :: error", error);

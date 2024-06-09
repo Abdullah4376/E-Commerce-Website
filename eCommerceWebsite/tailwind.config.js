@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      shapeRendering: {
+        shapeAuto: 'shape-rendering: auto',
+      },
     },
   },
   plugins: [],
