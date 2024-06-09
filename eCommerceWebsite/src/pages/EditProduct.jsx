@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 
 function EditProduct() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
     const {slug} = useParams();
     const navigate = useNavigate();
 
@@ -15,6 +15,7 @@ function EditProduct() {
             service.getProduct(slug)
             .then((product) => {
                 if (product) {
+                    console.log('Fetched Product', product);
                     setProducts(product)
                 }
             })
@@ -27,7 +28,7 @@ function EditProduct() {
 
     return products ? (
         <div className="py-8">
-            <ProductPostForm />
+            <ProductPostForm product={products} />
         </div>
     ) : null
 }
