@@ -9,11 +9,11 @@ import HomeLoader from './pages/HomeLoader.jsx'
 import Protection from './components/AuthLayout(Protection).jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
-import AllProducts from './pages/AllProducts.jsx'
 import AddProduct from './pages/AddProduct.jsx'
 import EditProduct from './pages/EditProduct.jsx'
 import Post from './pages/Post.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import UserProfile from './pages/UserProfile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,19 +33,18 @@ const router = createBrowserRouter([
             ),
         },
         {
-            path: "/signup",
+            path: "/profile",
             element: (
-                <Protection authentication={false}>
-                    <Signup />
+                <Protection authentication>
+                    <UserProfile />
                 </Protection>
             ),
         },
         {
-            path: "/all-products",
+            path: "/signup",
             element: (
-                <Protection authentication>
-                    {" "}
-                    <AllProducts />
+                <Protection authentication={false}>
+                    <Signup />
                 </Protection>
             ),
         },
