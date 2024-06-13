@@ -3,6 +3,7 @@ import { Shoes } from '../components/index'
 import service from "../appwrite/config";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Query } from "appwrite";
 
 function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
@@ -15,7 +16,9 @@ function UserProfile() {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const fetchedProducts = await service.getProducts();
+            const fetchedProducts = await service.getProducts(
+                [Query.equal('userID', useSelector((state) => state.auth.userData.$id))]
+              );
             setProducts(fetchedProducts.documents);
           } catch (error) {
             console.log(error);
@@ -53,28 +56,30 @@ function UserProfile() {
                     </div>
                 </div>
 
-                <div className="w-[59%]">
-                    <header className="border-[1px] border-[#c6c7c9] flex text-left w-[100%] px-5 py-5 font-medium uppercase tracking-tighter bg-white">
-                        <h1 className="cursor-pointer mr-8">Active Products</h1>
-                        <h1 className="cursor-pointer">Inactive</h1>
-                    </header>
-                    <section className="mt-7 grid grid-cols-3 gap-4">
-                        {products.length > 0 && products.map((product, index) => (
-                                <div key={index} className="w-[230px] bg-white border-[1px] border-[#c6c7c9]">
-                                    <Link to={`/product/${product.$id}`}>
-                                        <img src={service.getFilePreview(product.featuredImage)} alt={product.title} />
-                                        <div className="py-3 px-2">
-                                            <h3>{product.title}</h3>
-                                            <div className="flex justify-between">
-                                                <p>Icon</p>
-                                                {/* <p>Price {product.price}</p> */}
+                {isAuthor && 
+                    <div className="w-[59%]">
+                        <header className="border-[1px] border-[#c6c7c9] flex text-left w-[100%] px-5 py-5 font-medium uppercase tracking-tighter bg-white">
+                            <h1 className="cursor-pointer mr-8">Active Products</h1>
+                            <h1 className="cursor-pointer">Inactive</h1>
+                        </header>
+                        <section className="mt-7 grid grid-cols-3 gap-4">
+                            {products.length > 0 && products.map((product, index) => (
+                                    <div key={index} className="w-[230px] bg-white border-[1px] border-[#c6c7c9]">
+                                        <Link to={`/product/${product.$id}`}>
+                                            <img src={service.getFilePreview(product.featuredImage)} alt={product.title} />
+                                            <div className="py-3 px-2">
+                                                <h3>{product.title}</h3>
+                                                <div className="flex justify-between">
+                                                    <p>Icon</p>
+                                                    {/* <p>Price {product.price}</p> */}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                </div>
-                        ))}
-                    </section>
-                </div>
+                                        </Link>
+                                    </div>
+                            ))}
+                        </section>
+                    </div>
+                }
             </div>
         </div>
     );
