@@ -12,6 +12,8 @@ function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
 // Don't Forget to add Price in the attributes in appwrite and config.js!
     const [products, setProducts] = useState([]);
+    const userData = useSelector((state) => state.auth.userData);
+    console.log(userData)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +31,6 @@ function UserProfile() {
 
     console.log(products);
 
-    const userData = useSelector((state) => state.auth.userData);
     const isAuthor = products && userData ? products.UserID === userData.$id : false;
 
     return (
