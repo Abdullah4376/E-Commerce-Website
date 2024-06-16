@@ -12,8 +12,10 @@ function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
 // Don't Forget to add Price in the attributes in appwrite and config.js!
     const [products, setProducts] = useState([]);
-    const [userCountry, setUserCountry] = useState('');
+    const [hidden, setHidden] = useState('hidden');
     const userData = useSelector((state) => state.auth.userData);
+    const [ulHidden, setUlHidden] = useState('hidden')
+    const [iconHidden, setIconHidden] = useState('hidden')
 
     const extractMonthYear = (dateString) => {
         const date = new Date(dateString);
@@ -41,7 +43,7 @@ function UserProfile() {
     }, [userData]);
 
     // console.log(products);
-    console.log(userData);
+    // console.log(userData);
 
     return (
         <div className="w-full bg-[#EEEDF2] pt-14 px-14 pb-32 font-poppins">
@@ -76,20 +78,31 @@ function UserProfile() {
                         <h1 className="cursor-pointer mr-8">Active Products</h1>
                         <h1 className="cursor-pointer">Inactive</h1>
                     </header>
-                    <section className="mt-7 grid grid-cols-3 gap-4">
+                    <section className="mt-7 grid grid-cols-2 gap-4">
                         {products.length > 0 && products.map((product, index) => (
-                                <div key={index} className="w-[230px] bg-white border-[1px] border-[#c6c7c9]">
-                                    <Link to={`/product/${product.$id}`}>
-                                        <img src={service.getFilePreview(product.featuredImage)} alt={product.title} />
-                                        <div className="py-3 px-2">
-                                            <h3>{product.title}</h3>
-                                            <div className="flex justify-between">
-                                                <p><span class="material-symbols-outlined">more_horiz</span></p>
-                                                {/* <p>Price {product.price}</p> */}
-                                            </div>
-                                        </div>
-                                    </Link>
+                            <div key={index} className="w-[230px] h-[237px] bg-white border-[1px] border-[#c6c7c9]">
+                                <Link to={`/product/${product.$id}`}>
+                                    <img className='max-h-[142px] w-full' src={service.getFilePreview(product.featuredImage)} alt={product.title} />
+                                    <h3 className="hover:underline py-2 text-sm px-3">
+                                        {product.title}
+                                    </h3>
+                                </Link>
+                                <div className="relative float-left h-full w-full mt-5">
+                                    <span onClick={() => (
+                                        setUlHidden('')
+                                    )} onMouseOver={() => setHidden('')} onMouseOut={() => setHidden('hidden')} className={`mx-2 ${iconHidden} material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80`} style={{fontSize: 30}}>
+                                        more_horiz
+                                    </span>
+                                    <p className={`${hidden} absolute left-1 -top-7 bg-black text-white px-[7px] py-[7px] rounded-md text-xs`}>options</p>
+                                    {/* <p>Price {product.price}</p> */}
+                                    <ul className={`bg-white h-full relative ${ulHidden} -top-[235px]`}>
+                                    <span onClick={() => setUlHidden('hidden')} class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1">cancel</span>
+                                        <Link to={`/edit-product/${product.$id}`}><li className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm"><span style={{fontSize: 20}} className="material-symbols-outlined mr-3">edit</span>Edit</li></Link>
+                                        <Link to={`/product/${product.$id}`}><li className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm"><span className="material-symbols-outlined mr-3" style={{fontSize: 20}}>visibility</span>View</li></Link>
+                                        <li onClick={() => service.deleteProduct(product.$id).then((status) => status && service.deleteFile(product.featuredImage))} className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm absolute bottom-0 w-full border-t border-[#c6c7c9]"><span className="material-symbols-outlined mr-3" style={{fontSize: 20}}>delete</span>Delete</li>
+                                    </ul>
                                 </div>
+                            </div>
                         ))}
                         </section>
                     </div>
