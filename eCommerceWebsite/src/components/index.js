@@ -22,6 +22,7 @@ import Headsets from '../Images/Headsets.png'
 import Makeup from '../Images/Makeup.png'
 import Monitors from '../Images/Monitors.png'
 import Shoes from '../Images/Shoes.png'
+import IronMan from '../Images/IronMan.jpg'
 import Brand1 from '../Images/brand-1.png'
 import Brand2 from '../Images/brand-2.png'
 import Brand3 from '../Images/brand-3.png'
@@ -41,6 +42,7 @@ export {
     ProductPostForm,
     RTE,
     Protection,
+    IronMan,
     Select,
     img,
     card1,

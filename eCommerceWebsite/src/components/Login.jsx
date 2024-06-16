@@ -5,21 +5,25 @@ import { Button, Input } from './index'
 import authService from "../appwrite/auth";
 import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form'
+import service from "../appwrite/config";
 
 
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
 
     const login = async (data) => {
         setError('');
         try {
             const session = await authService.login(data);
             if (session) {
-                const userData = authService.getCurrentUser();
-                if (userData) dispatch(storeLogin(userData));
+                const userData = await authService.getCurrentUser();
+                const userProfileImage = await authService.getUserProfileImage();
+                if (userData && userProfileImage) {
+                    dispatch(storeLogin(userData, userProfileImage));
+                };
                 navigate('/dashboard');
             }
         } catch (error) {
@@ -31,11 +35,6 @@ function Login() {
     return(
         <div className='flex items-center justify-center w-full'>
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-                <div className="mb-2 flex justify-center">
-                            <span className="inline-block w-full max-w-[100px]">
-                                
-                            </span>
-                </div>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
                 <p className="mt-2 text-center text-base text-black/60">
                     Don&apos;t have any account?&nbsp;

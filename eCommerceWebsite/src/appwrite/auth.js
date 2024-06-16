@@ -44,6 +44,16 @@ export class AuthService {
         }
     }
 
+    async getUserProfileImage() {
+        try {
+            const response = await this.account.get();
+            const userProfileImageURL = response.prefs.userProfileImage;
+            return userProfileImageURL;
+        } catch (error) {
+            console.log('Appwrite serive :: getUserProfileImage :: error', error);
+        }
+    }
+
     async login ({email, password}) {
         try {
             // Display a Success message card like appwrite website on the ui
