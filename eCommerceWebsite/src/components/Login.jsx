@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { login as storeLogin} from '../features/productSlice'
 import { Button, Input } from './index'
 import authService from "../appwrite/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form'
 import service from "../appwrite/config";
 
@@ -20,9 +20,10 @@ function Login() {
             const session = await authService.login(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
-                const userProfileImage = await authService.getUserProfileImage();
-                if (userData && userProfileImage) {
-                    dispatch(storeLogin(userData, userProfileImage));
+                // const userProfileImage = await service.getFile(userImage);
+                if (/* userProfileImage && */ userData) {
+                    dispatch(storeLogin(userData))
+                    // dispatch(storeLogin(userProfileImage))
                 };
                 navigate('/dashboard');
             }

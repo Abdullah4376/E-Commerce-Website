@@ -31,7 +31,7 @@ function ProductPostForm({product}) {
 
                 dbPost = await service.updateProduct({
                     ...data,
-                    id: product.$id, // Pass the existing product ID for updating
+                    id: product.$id,
                     featuredImage: file ? file.$id : product.featuredImage    
                 });
             } else {

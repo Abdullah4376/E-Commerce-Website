@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Query } from "appwrite";
 import { useNavigate } from "react-router-dom";
-import authService  from "../appwrite/auth";
 
 function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
@@ -15,7 +14,6 @@ function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
     const userData = useSelector((state) => state.auth.userData);
     const navigate = useNavigate();
-    const [userProfileImage, setUserProfileImage] = useState(null)
     const [tabOfActiveProducts, setTabOfActiveProducts] = useState([]);
     const [activeTab, setActiveTab] = useState('active');
     const [tabOfInactiveProducts, setTabOfInactiveProducts] = useState([]);
@@ -31,17 +29,8 @@ function UserProfile() {
     }
 
     const dateData = extractMonthYear(userData.$createdAt);
-    
+
     useEffect(() => {
-        const currentUserData = async () => {
-            try {
-                const url = await authService.getUserProfileImage();
-                setUserProfileImage(url);
-            } catch (error) {
-                console.log('Error in UserProfile.jsx', error);
-            }
-        }
-        currentUserData();
         const fetchData = async () => {
             try {
                 if (userData) {

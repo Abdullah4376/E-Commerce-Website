@@ -42,16 +42,7 @@ export class AuthService {
         } catch (error) {
             console.log('Error in appwrite/auth.js/getCurrentUserFunction', error);
         }
-    }
-
-    async getUserProfileImage() {
-        try {
-            const response = await this.account.get();
-            const userProfileImageURL = response.prefs.userProfileImage;
-            return userProfileImageURL;
-        } catch (error) {
-            console.log('Appwrite serive :: getUserProfileImage :: error', error);
-        }
+        return null;
     }
 
     async login ({email, password}) {

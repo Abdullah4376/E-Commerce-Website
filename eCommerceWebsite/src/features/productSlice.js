@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
@@ -14,7 +14,8 @@ const initialState = {
         userID: '',
         id: '',
         status: false,
-        userData: null
+        userData: null,
+        userProfileImage: null
     }]
 };
 
@@ -24,12 +25,14 @@ const productSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.status = true;
-            state.userData = action.payload.userData
+            state.userData = action.payload.userData;
+            state.userProfileImage = action.payload.userProfileImage;
         },
 
         logout: (state) => {
             state.status = false;
             state.userData = null;
+            state.userProfileImage = null;
         }
     }
 });

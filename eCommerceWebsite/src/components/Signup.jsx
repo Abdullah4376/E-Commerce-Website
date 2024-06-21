@@ -5,6 +5,7 @@ import { login } from "../features/productSlice";
 import { Button, Input } from './index.js'
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import service from "../appwrite/config.js";
 
 
 function Signup() {
@@ -12,17 +13,27 @@ function Signup() {
     const dispatch  = useDispatch();
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [error, setError] = useState();
-    const [userProfileImage, setUserProfileImage] = useState('')
+    const [userProfileImage, setUserProfileImage] = useState(null)
     
     const signup = async (data) => {
+        
         setError('');
         try {
             const session = await authService.signup(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
-                const userProfileImage = await authService.getUserProfileImage();
-                if (userData) dispatch(login(userData, userProfileImage));
-                navigate('/dashboard')
+                const file = await service.uploadFile(data.userProfileImage[0]);
+                if (file) {
+                    const fileId = file.$id;
+                    console.log(fileId);
+                    data.userProfileImage = fileId;
+                    setUserProfileImage(fileId);
+                }
+                if (/* userProfileImage && */ userData) {
+                    dispatch(login(userData));
+                    // dispatch(login(userProfileImage));
+                }
+                navigate('/login')
             }
         } catch (error) {
             setError(error.message);
@@ -54,25 +65,20 @@ function Signup() {
                         })}
                         on
                         />
+
                         <Input
                         label="User Image :"
                         type="file"
                         className="mb-4"
                         accept="image/png, image/jpg, image/jpeg, image/gif"
                         {...register("userProfileImage", { required: true })}
-                        onInput={(e) => setUserProfileImage(e.target.value)}
                         />
-                        {errors.image && <span className="text-red-500">User Image is required</span>}
+                        {errors.userProfileImage && <span className="text-red-500">User Image is required</span>}
                         {userProfileImage && 
-                            <div className="w-full mb-4">
-                                <img
-                                    src={userProfileImage}
-                                    alt={userProfileImage}
-                                    className="rounded-lg"
-                                />
-                            </div>
+                        <div className="w-full">
+                            <img src={service.getFilePreview(userProfileImage)} />
+                        </div>
                         }
-
                         <Input
                         label='Email: '
                         placeholder='Enter your Email'
