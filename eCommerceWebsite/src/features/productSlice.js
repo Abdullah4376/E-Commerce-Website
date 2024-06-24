@@ -2,25 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    products: [{
-        title: '',
-        color: [],
-        quantity: 0,
-        price: 500,
-        productImages: [],
-        stock: 0,
-        description: '',
-        brand: '',
-        userID: '',
-        id: '',
-        status: false,
-        userData: null,
-        userProfileImage: null
-    }]
+    status: false,
+    userData: null,
+    userProfileImage: null
 };
 
 const productSlice = createSlice({
-    name: 'products',
+    name: 'auth',
     initialState,
     reducers: {
         login: (state, action) => {

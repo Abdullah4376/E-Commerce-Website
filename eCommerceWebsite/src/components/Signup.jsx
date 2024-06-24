@@ -5,7 +5,6 @@ import { login } from "../features/productSlice";
 import { Button, Input } from './index.js'
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import service from "../appwrite/config.js";
 
 
 function Signup() {
@@ -13,7 +12,6 @@ function Signup() {
     const dispatch  = useDispatch();
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [error, setError] = useState();
-    const [userProfileImage, setUserProfileImage] = useState(null)
     
     const signup = async (data) => {
         
@@ -22,16 +20,8 @@ function Signup() {
             const session = await authService.signup(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
-                const file = await service.uploadFile(data.userProfileImage[0]);
-                if (file) {
-                    const fileId = file.$id;
-                    console.log(fileId);
-                    data.userProfileImage = fileId;
-                    setUserProfileImage(fileId);
-                }
-                if (/* userProfileImage && */ userData) {
+                if (userData) {
                     dispatch(login(userData));
-                    // dispatch(login(userProfileImage));
                 }
                 navigate('/login')
             }
@@ -65,20 +55,9 @@ function Signup() {
                         })}
                         on
                         />
+                        {errors.name && <span className="text-red-500">Name is required</span>}
+                        
 
-                        <Input
-                        label="User Image :"
-                        type="file"
-                        className="mb-4"
-                        accept="image/png, image/jpg, image/jpeg, image/gif"
-                        {...register("userProfileImage", { required: true })}
-                        />
-                        {errors.userProfileImage && <span className="text-red-500">User Image is required</span>}
-                        {userProfileImage && 
-                        <div className="w-full">
-                            <img src={service.getFilePreview(userProfileImage)} />
-                        </div>
-                        }
                         <Input
                         label='Email: '
                         placeholder='Enter your Email'
@@ -88,6 +67,7 @@ function Signup() {
                             matchPattern: (value) => /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || 'Email Address must be a Valid Address!'
                         })}
                         />
+                        {errors.email && <span className="text-red-500">Email is required</span>}
 
                         <Input
                         label='Password: '
@@ -98,6 +78,7 @@ function Signup() {
                             matchPattern: (value) => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(value) || 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number!'
                         })}
                         />
+                        {errors.Password && <span className="text-red-500">Password is required</span>}
 
                         <Button className="w-full" type="submit">Create Account</Button>
                     </div>

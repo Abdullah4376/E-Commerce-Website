@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { IronMan } from '../components/index'
+import { Camera, Input } from '../components/index'
 import service from "../appwrite/config";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Query } from "appwrite";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
@@ -12,8 +13,10 @@ function UserProfile() {
 // Don't Forget to add Price in the attributes in appwrite and config.js!
 // Don't Forget to add Price in the attributes in appwrite and config.js!
 // Don't Forget to add Price in the attributes in appwrite and config.js!
+    const {register, handleSubmit} = useForm();
     const userData = useSelector((state) => state.auth.userData);
     const navigate = useNavigate();
+    const [userImage, setUserImage] = useState('')
     const [tabOfActiveProducts, setTabOfActiveProducts] = useState([]);
     const [activeTab, setActiveTab] = useState('active');
     const [tabOfInactiveProducts, setTabOfInactiveProducts] = useState([]);
@@ -29,6 +32,19 @@ function UserProfile() {
     }
 
     const dateData = extractMonthYear(userData.$createdAt);
+
+    const uploadUserImage = async (data) => {
+        try {
+            const file = await service.uploadFile(data.userProfileImage[0]);
+            if (file) {
+                const fileId = uploadedFile.$id;
+                data.userProfileImage = fileId;
+                setUserImage(fileId);
+            }
+        } catch (error) {
+            console.log('Error while uploading file at UserProfile.jsx');
+        }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,7 +86,25 @@ function UserProfile() {
                 <div className="bg-white p-8 min-w-[450px] text-center border-[1px] border-[#c6c7c9]">
                     <div className="relative">
                         {/* Add the featuredImage of the user */}
-                        <img src={IronMan} alt="I am Iron Man!" className="w-40 h-40 rounded-full mx-auto"/>
+                        <form onSubmit={handleSubmit(uploadUserImage)} className="w-40 h-40 mx-auto rounded-full relative">
+                            <Input
+                            label="Featured Image :"
+                            type="file"
+                            className={`mb-4 bg-[${Camera}] bg-no-repeat bg-center bg-contain p-[10px] border-[1px] border-[#c6c7c9] rounded-[5px]`}
+                            accept="image/png, image/jpg, image/jpeg, image/gif"
+                            {...register("userFeaturedImage", { required: false })}
+                            />
+                            {!userImage && (
+                                <img
+                                    src={Camera}
+                                    alt="User Image"
+                                    className="w-[40px] h-[40px] rounded-full"
+                                />
+                            )}
+                            {userImage && (
+                                <img src={userImage} alt="User Image" className="bg-black rounded-full" />
+                            )}
+                        </form>
                         <p className="absolute top-0 right-0 border-[#1DBF73] border-[1px] text-sm text-[#1DBF73] px-2 rounded-xl">Online</p>
                     </div>
 

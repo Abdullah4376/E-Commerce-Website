@@ -42,7 +42,6 @@ export class AuthService {
         } catch (error) {
             console.log('Error in appwrite/auth.js/getCurrentUserFunction', error);
         }
-        return null;
     }
 
     async login ({email, password}) {
