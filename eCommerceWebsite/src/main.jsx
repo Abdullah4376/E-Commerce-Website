@@ -14,6 +14,7 @@ import EditProduct from './pages/EditProduct.jsx'
 import Post from './pages/Post.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import UserProfile from './pages/UserProfile.jsx'
+import SellerDashboard from './components/SellerDashboard.jsx'
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,14 @@ const router = createBrowserRouter([
             element: (
                 <Protection authentication>
                     <Dashboard />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard",
+            element: (
+                <Protection authentication>
+                    <SellerDashboard />
                 </Protection>
             )
         },

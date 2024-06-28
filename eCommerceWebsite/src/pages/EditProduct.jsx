@@ -28,7 +28,7 @@ function EditProduct() {
 
     return products ? (
         <div className="py-8">
-            <ProductPostForm product={products} />
+            <ProductPostForm product={products} slug={slug}/>
         </div>
     ) : null
 }

@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import RTE from "./RTE";
 
-function ProductPostForm({product}) {
+function ProductPostForm({product, slug}) {
     const navigate = useNavigate();
     const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm({
         defaultValues: {
             title: product?.title || '',
-            slug: product?.slug || '',
+            slug: slug ? slug : '',
             content: product?.content || '',
             status: product?.status || 'active',
         }
@@ -21,6 +21,7 @@ function ProductPostForm({product}) {
 
     const submit = async (data) => {
         try {
+            console.log(data);
             let dbPost;
             if (product) {
                 const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;

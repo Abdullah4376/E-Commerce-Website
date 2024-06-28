@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     status: false,
     userData: null,
-    userProfileImage: null
+    userFeaturedImage: null,
 };
 
 const productSlice = createSlice({
@@ -14,17 +14,23 @@ const productSlice = createSlice({
         login: (state, action) => {
             state.status = true;
             state.userData = action.payload.userData;
-            state.userProfileImage = action.payload.userProfileImage;
         },
 
         logout: (state) => {
             state.status = false;
             state.userData = null;
-            state.userProfileImage = null;
+        },
+
+        addUserProfileImage : (state, action) => {
+            state.userFeaturedImage = action.payload;
+        },
+
+        removeUserProfileImage: (state) => {
+            state.userFeaturedImage = null;
         }
     }
 });
 
-export const {login, logout} = productSlice.actions;
+export const {login, logout, addUserProfileImage, removeUserProfileImage} = productSlice.actions;
 
 export default productSlice.reducer;

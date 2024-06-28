@@ -23,7 +23,7 @@ function Signup() {
                 if (userData) {
                     dispatch(login(userData));
                 }
-                navigate('/login')
+                navigate('/dashboard')
             }
         } catch (error) {
             setError(error.message);
@@ -40,7 +40,7 @@ function Signup() {
                         to="/login"
                         className="font-medium text-primary transition-all duration-200 hover:underline"
                     >
-                        Sign In
+                        Login
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}

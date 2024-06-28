@@ -14,8 +14,13 @@ function Header() {
             active: true
         },
         {
-            name: 'Dashboard',
+            name: 'All Products',
             slug: '/dashboard',
+            active: authStatus
+        },
+        {
+            name: 'Profile',
+            slug: '/profile',
             active: authStatus
         },
         {
@@ -46,6 +51,11 @@ function Header() {
         {
             name: 'Add Product',
             slug: '/add-product',
+            active: authStatus
+        },
+        {
+            name: 'Dashboard',
+            slug: '/seller-dashboard',
             active: authStatus
         }
     ]
