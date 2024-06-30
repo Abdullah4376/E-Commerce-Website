@@ -28,7 +28,6 @@ function App() {
     <>
       <Header />
         <Outlet />
-      <Footer />
     </>
   ) : null
 }

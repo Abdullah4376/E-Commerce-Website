@@ -54,8 +54,8 @@ function Header() {
             active: authStatus
         },
         {
-            name: 'Dashboard',
-            slug: '/seller-dashboard',
+            name: 'Seller Dashboard',
+            slug: '/seller-dashboard-home',
             active: authStatus
         }
     ]
@@ -63,11 +63,11 @@ function Header() {
     return(
         <>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-            <header className="h-14">
-                    <nav className="my-4 flex justify-between content-center px-24">
+            <header className="h-20 bg-black text-white">
+                    <nav className="pt-5 flex justify-between content-center px-24">
                         <div className="sec-l">
                             <Link to='/'>
-                                <p className="text-black text-3xl font-semibold font-poppins cursor-pointer">E-Coma.</p>
+                                <p className="text-3xl font-semibold font-poppins cursor-pointer">E-Coma.</p>
                             </Link>
                         </div>
                         <div className="sec-m mt-2 font-medium font-poppins">

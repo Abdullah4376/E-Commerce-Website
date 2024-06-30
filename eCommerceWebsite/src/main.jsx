@@ -14,7 +14,7 @@ import EditProduct from './pages/EditProduct.jsx'
 import Post from './pages/Post.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import UserProfile from './pages/UserProfile.jsx'
-import SellerDashboard from './components/SellerDashboard.jsx'
+import SellerDashboardHome from './components/SellerDashboardHome.jsx'
 
 const router = createBrowserRouter([
   {
@@ -76,10 +76,10 @@ const router = createBrowserRouter([
             )
         },
         {
-            path: "/seller-dashboard",
+            path: "/seller-dashboard-home",
             element: (
                 <Protection authentication>
-                    <SellerDashboard />
+                    <SellerDashboardHome />
                 </Protection>
             )
         },

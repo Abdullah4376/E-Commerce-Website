@@ -15,7 +15,8 @@ import {
     Brand2,
     Brand3,
     Brand4,
-    Brand5
+    Brand5,
+    Footer
 } from '../components/index.js'
 
 function Home() {
@@ -245,6 +246,9 @@ function Home() {
         </section>
 
         {/* Section 4 Ends Here! */}
+
+          <Footer />
+
 
         </>
     )
