@@ -5,16 +5,7 @@ import './index.css'
 import { Provider } from 'react-redux'
 import { store } from './store/store.js'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HomeLoader from './pages/HomeLoader.jsx'
-import Protection from './components/AuthLayout(Protection).jsx'
-import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx'
-import AddProduct from './pages/AddProduct.jsx'
-import EditProduct from './pages/EditProduct.jsx'
-import Post from './pages/Post.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import UserProfile from './pages/UserProfile.jsx'
-import SellerDashboardHome from './components/SellerDashboardHome.jsx'
+import { HomeLoader, Protection, Login, Signup, AddProduct, EditProduct, Post, Dashboard, UserProfile, SellerDashboardHome, SellerDashboardOrders, SellerDashboardProducts, SellerDashboardCustomers, SellerDashboardFiles, SellerDashboardAnalytics, SellerDashboardMarketing, SellerDashboardDiscounts } from './components/index.js'
 
 const router = createBrowserRouter([
   {
@@ -80,6 +71,62 @@ const router = createBrowserRouter([
             element: (
                 <Protection authentication>
                     <SellerDashboardHome />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-orders",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardOrders />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-products",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardProducts />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-customers",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardCustomers />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-files",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardFiles />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-analytics",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardAnalytics />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-marketing",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardMarketing />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-discounts",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardDiscounts />
                 </Protection>
             )
         },

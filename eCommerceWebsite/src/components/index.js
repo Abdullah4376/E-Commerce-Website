@@ -28,8 +28,39 @@ import Brand2 from '../Images/brand-2.png'
 import Brand3 from '../Images/brand-3.png'
 import Brand4 from '../Images/brand-4.png'
 import Brand5 from '../Images/brand-5.png'
+import HomeLoader from '../pages/HomeLoader.jsx'
+import UserProfile from '../pages/UserProfile.jsx'
+import SellerDashboardHome from './SellerDashboardComponents/SellerDashboardHome.jsx'
+import SellerDashboardOrders from './SellerDashboardComponents/SellerDashboardOrders.jsx'
+import SellerDashboardProducts from './SellerDashboardComponents/SellerDashboardProducts.jsx'
+import SellerDashboardCustomers from './SellerDashboardComponents/SellerDashboardCustomers.jsx'
+import SellerDashboardFiles from './SellerDashboardComponents/SellerDashboardFiles.jsx'
+import SellerDashboardDiscounts from './SellerDashboardComponents/SellerDashboardDiscounts.jsx'
+import SellerDashboardMarketing from './SellerDashboardComponents/SellerDashboardMarketing.jsx'
+import SellerDashboardAnalytics from './SellerDashboardComponents/SellerDashboardAnalytics.jsx'
+import AddProduct from '../pages/AddProduct.jsx'
+import Dashboard from '../pages/Dashboard.jsx'
+import EditProduct from '../pages/EditProduct.jsx'
+import Post from '../pages/Post.jsx'
+import Sidebar from './Sidebar.jsx'
+
 
 export {
+    Sidebar,
+    Post,
+    EditProduct,
+    AddProduct,
+    Dashboard,
+    SellerDashboardOrders,
+    SellerDashboardProducts,
+    SellerDashboardCustomers,
+    SellerDashboardFiles,
+    SellerDashboardDiscounts,
+    SellerDashboardMarketing,
+    SellerDashboardAnalytics,
+    UserProfile,
+    SellerDashboardHome,
+    HomeLoader,
     Home,
     Header,
     Footer,
