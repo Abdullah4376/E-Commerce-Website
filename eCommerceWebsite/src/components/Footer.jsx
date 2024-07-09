@@ -40,7 +40,7 @@ function Footer() {
 
             <hr className="h-[1px] border-none bg-[#343435] w-[85%] m-auto" />
 
-            <h3 className="mt-5 pb-8 font-light text-[#8c8c8f]">Copyright © 2024 E-Coma. All Rights Reserved, Designed & Developed by <span className="text-white">Muhammad Abdullah</span>. Are You <span className="text-green-500">OK???</span></h3>
+            <h3 className="mt-5 pb-8 font-light text-[#8c8c8f]">Copyright © 2024 E-Coma. All Rights Reserved, Designed & Developed by <span className="text-white">Muhammad Abdullah</span>.</h3>
         </footer>
     )
 }
