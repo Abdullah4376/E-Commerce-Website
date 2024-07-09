@@ -5,7 +5,7 @@ import './index.css'
 import { Provider } from 'react-redux'
 import { store } from './store/store.js'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { HomeLoader, Protection, Login, Signup, AddProduct, EditProduct, Post, Dashboard, UserProfile, SellerDashboardHome, SellerDashboardOrders, SellerDashboardProducts, SellerDashboardCustomers, SellerDashboardFiles, SellerDashboardAnalytics, SellerDashboardMarketing, SellerDashboardDiscounts } from './components/index.js'
+import { HomeLoader, Protection, Login, Signup, AddProduct, EditProduct, Post, Dashboard, UserProfile, SellerDashboardHome, SellerDashboardOrders, SellerDashboardProducts, SellerDashboardCustomers, SellerDashboardFiles, SellerDashboardAnalytics, SellerDashboardMarketing, SellerDashboardDiscounts, SellerDashboardSettings } from './components/index.js'
 
 const router = createBrowserRouter([
   {
@@ -127,6 +127,14 @@ const router = createBrowserRouter([
             element: (
                 <Protection authentication>
                     <SellerDashboardDiscounts />
+                </Protection>
+            )
+        },
+        {
+            path: "/seller-dashboard-settings",
+            element: (
+                <Protection authentication>
+                    <SellerDashboardSettings />
                 </Protection>
             )
         },

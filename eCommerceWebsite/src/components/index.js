@@ -28,6 +28,7 @@ import Brand2 from '../Images/brand-2.png'
 import Brand3 from '../Images/brand-3.png'
 import Brand4 from '../Images/brand-4.png'
 import Brand5 from '../Images/brand-5.png'
+import Logo from '../Images/Logo.png'
 import HomeLoader from '../pages/HomeLoader.jsx'
 import UserProfile from '../pages/UserProfile.jsx'
 import SellerDashboardHome from './SellerDashboardComponents/SellerDashboardHome.jsx'
@@ -43,9 +44,12 @@ import Dashboard from '../pages/Dashboard.jsx'
 import EditProduct from '../pages/EditProduct.jsx'
 import Post from '../pages/Post.jsx'
 import Sidebar from './Sidebar.jsx'
+import SellerDashboardSettings from './SellerDashboardComponents/SellerDashboardSettings.jsx'
 
 
 export {
+    Logo,
+    SellerDashboardSettings,
     Sidebar,
     Post,
     EditProduct,

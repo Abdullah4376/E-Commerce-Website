@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoutBtn } from './index.js'
+import { Logo, LogoutBtn } from './index.js'
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -61,12 +61,13 @@ function Header() {
     ]
 
     return(
-        <>
+        <div className="fixed top-0 z-50 w-full overflow-hidden shadow-md">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             <header className="h-[13vh] bg-white text-black w-full">
                     <nav className="pt-5 flex justify-between z-50 content-center px-24">
                         <div className="sec-l">
-                            <Link to='/'>
+                            <Link to='/' className="flex gap-3 items-center">
+                                <img src={Logo} alt="Logo" className="h-10" />
                                 <p className="text-3xl font-semibold font-poppins cursor-pointer">E-Coma.</p>
                             </Link>
                         </div>
@@ -93,7 +94,7 @@ function Header() {
                         </div>
                     </nav>
             </header>
-        </>
+        </div>
     )
 }
 

@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import authService from './appwrite/auth.js'
 import {login, logout} from './features/productSlice.js'
 import Header from './components/Header.jsx';
-import Footer from './components/Footer.jsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -27,7 +26,9 @@ function App() {
   return !loading ? (
     <>
       <Header />
-        <Outlet />
+        <main className='mt-[13vh]'>
+          <Outlet />
+        </main>
     </>
   ) : null
 }

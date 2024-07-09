@@ -1,15 +1,15 @@
 import React from 'react';
 import { Sidebar } from '../index'
 
-function SellerDashboardOrders() {
+function SellerDashboardSettings() {
     return (
         <div className="flex w-full min-h-fit rounded-t-lg font-poppins">
-            <Sidebar active='orders' settingsActive='' />
+            <Sidebar settingsActive='settings' />
             <div className="flex-grow px-3 py-6 flex justify-center">
-                Orders
+                Settings
             </div>
         </div>
     );
 };
 
-export default SellerDashboardOrders;
+export default SellerDashboardSettings;

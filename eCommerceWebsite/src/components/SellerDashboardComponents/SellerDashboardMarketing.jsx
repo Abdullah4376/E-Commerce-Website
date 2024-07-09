@@ -1,9 +1,13 @@
 import React from 'react';
+import { Sidebar } from '../index'
 
-const SellerDashboardMarketing = () => {
+function SellerDashboardMarketing() {
     return (
-        <div>
-            
+        <div className="flex w-full min-h-fit rounded-t-lg font-poppins">
+            <Sidebar active='ads_click' settingsActive='' />
+            <div className="flex-grow px-3 py-6 flex justify-center">
+                Marketing
+            </div>
         </div>
     );
 };
