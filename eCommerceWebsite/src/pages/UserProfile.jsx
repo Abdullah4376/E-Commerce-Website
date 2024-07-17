@@ -85,6 +85,26 @@ function UserProfile() {
         }
     }, [userData, userFeaturedImage]);
 
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
+    // Add an edit button to edit all the information
 
     return (
         <div className="w-full bg-[#EEEDF2] pt-14 px-14 pb-32 font-poppins">

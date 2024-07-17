@@ -45,9 +45,22 @@ import EditProduct from '../pages/EditProduct.jsx'
 import Post from '../pages/Post.jsx'
 import Sidebar from './Sidebar.jsx'
 import SellerDashboardSettings from './SellerDashboardComponents/SellerDashboardSettings.jsx'
-
+import AddProductRight from '../Images/Add-Product-Right.png'
+import CustomDomain from '../Images/add-domain-task.png'
+import OnlineStore from '../Images/customize-theme-task.png'
+import StoreName from '../Images/set-store-name-task.png'
+import Shipping from '../Images/setup-shipping-task.png'
+import GeneralPayments from '../Images/setup-general-payments-task.png'
+import TestOrder from '../Images/create-test-order-task.png'
 
 export {
+    TestOrder,
+    GeneralPayments,
+    Shipping,
+    StoreName,
+    OnlineStore,
+    CustomDomain,
+    AddProductRight,
     Logo,
     SellerDashboardSettings,
     Sidebar,
