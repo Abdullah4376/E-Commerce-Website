@@ -62,6 +62,9 @@ function Header() {
 
     return(
         <div className="fixed top-0 z-50 w-full overflow-hidden shadow-md">
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             <header className="h-[13vh] bg-white text-black w-full">
                     <nav className="pt-5 flex justify-between z-50 content-center px-24">

@@ -26,7 +26,7 @@ function App() {
   return !loading ? (
     <>
       <Header />
-        <main className='mt-[13vh]'>
+        <main className='mt-[13vh] font-inter'>
           <Outlet />
         </main>
     </>

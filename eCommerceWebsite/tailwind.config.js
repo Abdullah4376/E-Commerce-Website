@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        poppins: ["Poppins"],
+        inter: ['Inter']
       },
       shapeRendering: {
         shapeAuto: 'shape-rendering: auto',
