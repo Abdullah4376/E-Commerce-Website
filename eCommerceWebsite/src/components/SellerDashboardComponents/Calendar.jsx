@@ -11,12 +11,19 @@ function Calendar() {
     // Fetch and display data according to the selected date range
   };
 
+  // Add a better comparing functionality like Shopify
+  // Add a better comparing functionality like Shopify
+  // Add a better comparing functionality like Shopify
+  // Add a better comparing functionality like Shopify
+  // Add a better comparing functionality like Shopify
+  // Add a better comparing functionality like Shopify
+
   return (
     <div className='mt-7'>
       <div className="relative flex items-center gap-3">
         <CustomDateRangePicker onSelectDateRange={handleDateRangeChange} />
         <p className="text-sm">
-          Compared from {selectedDateRange[0] ? format(selectedDateRange[0], 'MMMM d, yyyy') : format(comparisonDate, 'MMMM d, yyyy')} - {format(comparisonDate, 'MMMM d, yyyy')}
+          Compared to {selectedDateRange[0] ? format(selectedDateRange[0], 'MMMM d, yyyy') : format(comparisonDate, 'MMMM d, yyyy')} - {format(comparisonDate, 'MMMM d, yyyy')}
         </p>
       </div>
     </div>

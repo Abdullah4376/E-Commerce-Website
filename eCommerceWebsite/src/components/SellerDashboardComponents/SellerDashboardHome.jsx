@@ -3,9 +3,10 @@ import {
     Sidebar, AddProductRight, OnlineStore, StoreName, Shipping, GeneralPayments, TestOrder
 } from '../index';
 import service from "../../appwrite/config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Calendar from "./Calendar";
+import ChartData from "./Charts/ChartData";
 
 function SellerDashboardHome() {
 
@@ -213,14 +214,50 @@ function SellerDashboardHome() {
                         <div className="w-full">
                             <h1 className="font-medium font-inter text-2xl">Overview Dashboard</h1>
     
-                            {/* Add charts to show data */}
-                            {/* Add charts to show data */}
-                            {/* Add charts to show data */}
-                            {/* Add charts to show data */}
-                            {/* Add charts to show data */}
-                            {/* Add charts to show data */}
+                            {/* Show lines on charts according to data */}
+                            {/* Show lines on charts according to data */}
+                            {/* Show lines on charts according to data */}
+                            {/* Show lines on charts according to data */}
+                            {/* Show lines on charts according to data */}
+                            {/* Show lines on charts according to data */}
     
                             <Calendar />
+
+                            <div className="mt-7 grid grid-cols-3 gap-4">
+
+                                <ChartData 
+                                    head={'Total Sales'} 
+                                    quantity={'$1,136.65'} 
+                                    percentage={'19%'} 
+                                    title={'Draft Orders'} 
+                                    description={'Sales Over Time'}  
+                                />
+                                <ChartData 
+                                    head={'Online Store Sessions'} 
+                                    quantity={'1'} 
+                                    percentage={'67%'} 
+                                    title={'Visitors'} 
+                                    description={'Sessions Over Time'}  
+                                />
+                                <ChartData 
+                                    head={'Returning Customer Rate'} 
+                                    quantity={'0%'} 
+                                    percentage={'-'} 
+                                    title={'Customers'} 
+                                    description={'Customer Rate'}  
+                                />
+                                <ChartData 
+                                    head={'Total Orders'} 
+                                    quantity={'14'} 
+                                    percentage={'4%'} 
+                                    title={'Orders'} 
+                                    description={'Orders Over Time'}  
+                                />
+                                
+                            </div>
+
+                            <h1 className="flex justify-center mt-10 text-xl">Get a detailed look at the&nbsp;<Link className="font-semibold underline text-teal-500" to={'/seller-dashboard-analytics'}>Analytics</Link>&nbsp;tab!</h1>
+
                         </div>
                     ) : (
                         <div>
