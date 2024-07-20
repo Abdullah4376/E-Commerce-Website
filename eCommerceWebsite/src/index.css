@@ -9,9 +9,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 19px;
-    width: 19px;
+    height: 18px;
+    width: 18px;
     border: none;
-    background-color: black;
+    background-color: #575757;
     border-radius: 9999px; /* To make it circular */
+}
+
+.orders-custom-checkbox input[type="checkbox"]:checked + label {
+    @apply bg-black;
 }

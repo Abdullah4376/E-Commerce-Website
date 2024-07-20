@@ -33,7 +33,7 @@ function CustomDateRangePicker ({ onSelectDateRange }) {
         {selectedRange && selectedRange}
       </button>
       {showDropdown && (
-        <div className="absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="z-50 absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="py-1">
             {dateRanges.map((range) => (
               <button
