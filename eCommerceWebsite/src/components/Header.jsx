@@ -24,16 +24,6 @@ function Header() {
             active: authStatus
         },
         {
-            name: 'Services',
-            slug: '/services',
-            active: false
-        },
-        {
-            name: 'Contact Us',
-            slug: '/contact-us',
-            active: false
-        },
-        {
             name: 'Login',
             slug: '/login',
             active: !authStatus
@@ -47,11 +37,6 @@ function Header() {
             name: 'Shopping Cart',
             slug: '/shopping-cart',
             active: !authStatus
-        },
-        {
-            name: 'Add Product',
-            slug: '/add-product',
-            active: authStatus
         },
         {
             name: 'Seller Dashboard',

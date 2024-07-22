@@ -123,7 +123,7 @@ function SellerDashboardOrders() {
 
             {/* Right Section */}
             <div className="flex gap-2">
-              <button className="p-2 py-1 rounded-lg border border-slate-400 flex items-center">
+              <button className="p-1 py-1 rounded-lg border border-slate-400 flex items-center">
                 <span
                   style={{ fontSize: "22px" }}
                   className="material-symbols-outlined"
@@ -131,7 +131,7 @@ function SellerDashboardOrders() {
                   filter_list
                 </span>
               </button>
-              <button className="p-2 py-1 rounded-lg border border-slate-400 flex items-center">
+              <button className="p-1 py-1 rounded-lg border border-slate-400 flex items-center">
                 <span
                   style={{ fontSize: "22px" }}
                   className="material-symbols-outlined"
