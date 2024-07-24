@@ -45,7 +45,7 @@ function SellerDashboardProducts() {
     }
 
     return (
-        <div className="bg-[#F1F1F1] flex justify-center w-full min-h-fit rounded-t-lg font-inter">
+        <div className="bg-[#F1F1F1] flex justify-center w-full min-h-[90vh] rounded-t-lg font-inter">
             <Sidebar active='sell' settingsActive='' />
             <div className="px-3 py-6 w-[75%] ml-60">
                 <header className='text-xl font-semibold flex justify-between'>
@@ -103,7 +103,7 @@ function SellerDashboardProducts() {
                     </div>
 
                     {products.length !== 0 ? products.map(product => (
-                        <div key={product.$id} className="grid grid-cols-8 gap-4 items-center text-xs text-[#575757] border-t border-slate-300 px-4 py-2">
+                        <div key={product.$id} className="grid grid-cols-8 gap-4 items-center text-sm text-[#575757] border-t border-slate-300 px-4 py-2">
                             <div className="flex items-center col-span-1">
                                 <input
                                 id={product.$id}

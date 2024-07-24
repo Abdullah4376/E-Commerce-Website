@@ -96,7 +96,7 @@ function SellerDashboardOrders() {
   ];
 
   return (
-    <div className="bg-[#F1F1F1] flex justify-center w-full min-h-fit rounded-t-lg font-inter">
+    <div className="bg-[#F1F1F1] flex justify-center w-full min-h-[90vh] rounded-t-lg font-inter">
       <Sidebar active="orders" settingsActive="" />
       <div className="px-3 py-6 w-[75%] ml-60">
         <h1 className="text-xl font-semibold">Orders</h1>

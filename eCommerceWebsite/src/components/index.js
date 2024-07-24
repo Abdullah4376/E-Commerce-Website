@@ -35,7 +35,6 @@ import SellerDashboardHome from './SellerDashboardComponents/SellerDashboardHome
 import SellerDashboardOrders from './SellerDashboardComponents/SellerDashboardOrders.jsx'
 import SellerDashboardProducts from './SellerDashboardComponents/SellerDashboardProducts.jsx'
 import SellerDashboardCustomers from './SellerDashboardComponents/SellerDashboardCustomers.jsx'
-import SellerDashboardFiles from './SellerDashboardComponents/SellerDashboardFiles.jsx'
 import SellerDashboardDiscounts from './SellerDashboardComponents/SellerDashboardDiscounts.jsx'
 import SellerDashboardMarketing from './SellerDashboardComponents/SellerDashboardMarketing.jsx'
 import SellerDashboardAnalytics from './SellerDashboardComponents/SellerDashboardAnalytics.jsx'
@@ -71,7 +70,6 @@ export {
     SellerDashboardOrders,
     SellerDashboardProducts,
     SellerDashboardCustomers,
-    SellerDashboardFiles,
     SellerDashboardDiscounts,
     SellerDashboardMarketing,
     SellerDashboardAnalytics,

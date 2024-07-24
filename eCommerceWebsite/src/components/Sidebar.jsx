@@ -7,7 +7,6 @@ function Sidebar({active, settingsActive}) {
         { name: 'Orders', icon: 'orders', path: '/seller-dashboard-orders' },
         { name: 'Products', icon: 'sell', path: '/seller-dashboard-products' },
         { name: 'Customers', icon: 'person', path: '/seller-dashboard-customers' },
-        { name: 'Files', icon: 'add_photo_alternate', path: '/seller-dashboard-files' },
         { name: 'Analytics', icon: 'monitoring', path: '/seller-dashboard-analytics' },
         { name: 'Marketing', icon: 'ads_click', path: '/seller-dashboard-marketing' },
         { name: 'Discounts', icon: 'percent', path: '/seller-dashboard-discounts' },
