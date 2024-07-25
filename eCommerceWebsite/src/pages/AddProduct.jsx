@@ -5,10 +5,10 @@ import { ProductPostForm } from '../components/index';
 function AddProduct() {
     const [loading, setLoading] = useState(true);
 
-    setTimeout(() => setLoading(false), 800)
+    setTimeout(() => setLoading(false), 600)
 
     return (
-        <div className="py-8">
+        <>
           {loading ? (
             <div className="w-full text-center py-72" role="status">
                 <svg aria-hidden="true" className="inline w-14 h-14 text-gray-300 animate-spin fill-blue-700" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@ function AddProduct() {
           ) : (
             <ProductPostForm />
           )}
-        </div>
+        </>
     );
 }
 

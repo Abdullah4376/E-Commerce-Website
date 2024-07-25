@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { format } from 'date-fns';
 import CustomDateRangePicker from './CustomDateRangePicker';
 
 function Calendar() {
   const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
-  const [comparisonDate] = useState(new Date());
+  // const [comparisonDate] = useState(new Date());
+
+  // Send the selected date range to the state to show data on the graphs or on the ui.
+  // Send the selected date range to the state to show data on the graphs or on the ui.
+  // Send the selected date range to the state to show data on the graphs or on the ui.
+  // Send the selected date range to the state to show data on the graphs or on the ui.
 
   const handleDateRangeChange = (range) => {
     setSelectedDateRange(range);
@@ -22,9 +26,6 @@ function Calendar() {
     <div className='mt-7'>
       <div className="relative flex items-center gap-3">
         <CustomDateRangePicker onSelectDateRange={handleDateRangeChange} />
-        <p className="text-sm">
-          Compared to {selectedDateRange[0] ? format(selectedDateRange[0], 'MMMM d, yyyy') : format(comparisonDate, 'MMMM d, yyyy')} - {format(comparisonDate, 'MMMM d, yyyy')}
-        </p>
       </div>
     </div>
   );

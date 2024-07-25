@@ -14,7 +14,7 @@ export class Service{
         this.bucket = new Storage(this.client);
     }
 
-    async addProduct({title, slug, content, featuredImage, status, UserID}){
+    async addProduct({title, slug, content, featuredImage, status, UserID, /*brand, price, quantity */}){
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -26,6 +26,9 @@ export class Service{
                     featuredImage,
                     status,
                     UserID,
+                    // brand,
+                    // price,
+                    // quantity
                 }
             )
         } catch (error) {
@@ -33,7 +36,7 @@ export class Service{
         }
     }
 
-    async updateProduct(slug, {title, content, featuredImage, status}){
+    async updateProduct(slug, {title, content, featuredImage, status, /* price, quantity*/}){
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
@@ -44,7 +47,8 @@ export class Service{
                     content,
                     featuredImage,
                     status,
-
+                    // price,
+                    // quantity
                 }
             )
         } catch (error) {
