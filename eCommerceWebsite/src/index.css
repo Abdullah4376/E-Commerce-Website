@@ -19,3 +19,33 @@
 .orders-custom-checkbox input[type="checkbox"]:checked + label {
     @apply bg-black;
 }
+
+.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+  
+.custom-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    width: 100%;
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+    border: 1px solid #64748b;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+}
+  
+.custom-select::after {
+    content: "↓";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1rem;
+    color: #64748b;
+}
+  

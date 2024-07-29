@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 
 function EditProduct() {
-    const [products, setProducts] = useState(null);
+    const [product, setProduct] = useState(null);
     const {slug} = useParams();
     const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function EditProduct() {
             .then((product) => {
                 if (product) {
                     console.log('Fetched Product', product);
-                    setProducts(product)
+                    setProduct(product)
                 }
             })
             .catch(e => console.log(`Error while getting product at src/pages/EditProduct: ${e}`))
@@ -26,9 +26,9 @@ function EditProduct() {
         }
     }, [slug, navigate])
 
-    return products ? (
-        <div className="py-8">
-            <ProductPostForm product={products} slug={slug}/>
+    return product ? (
+        <div>
+            <ProductPostForm product={product} slug={slug}/>
         </div>
     ) : null
 }
