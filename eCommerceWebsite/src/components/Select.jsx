@@ -1,13 +1,23 @@
 import React, { useId } from "react";
 
-function Select({ className, ...props }, ref) {
+function Select({ options, className, ...props }, ref) {
   const id = useId();
-
   return (
     <div className="w-full">
-      <select {...props} id={id} className={className} ref={ref}>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
+      <select  
+        {...props}
+        id={id} 
+        className={className} 
+        ref={ref}
+      >
+        {options?.map((option, index) => (
+          <option 
+            key={index} 
+            value={option}
+          >
+            {option}
+          </option>
+        ))}
       </select>
     </div>
   );

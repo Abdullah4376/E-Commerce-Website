@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { Input, Button, Select } from './index';
+import { Input, Select } from './index';
 import service from '../appwrite/config';
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -8,14 +8,17 @@ import RTE from "./RTE";
 
 function ProductPostForm({product, slug}) {
     const navigate = useNavigate();
+    const [msg, setMsg] = useState(false)
+
     const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm({
         defaultValues: {
             title: product?.title || '',
             slug: slug ? slug : '',
             content: product?.content || '',
-            status: product?.status || 'actve',
+            status: product?.status || 'Active',
             quantity: product?.quantity || null,
-            price: product?.price || null
+            price: product?.price || null,
+            image: product?.featuredImage || null
         }
     });
 
@@ -51,8 +54,6 @@ function ProductPostForm({product, slug}) {
             }
 
             if (dbPost) {
-                // Assuming dbPost returns the document ID after creation/update
-                console.log('Navigation to product:', dbPost.$id); // Debug log for navigation
                 navigate(`/product/${dbPost.$id}`);
             } else {
                 console.error('Product creation/update failed. dbPost:', dbPost);
@@ -80,7 +81,6 @@ function ProductPostForm({product, slug}) {
             subscription.unsubscribe();
         };
     }, [watch, slugTransform, setValue]);
-
 
     return (
         <div className="bg-[#F1F1F1] h-full pt-8 pb-8">
@@ -120,35 +120,44 @@ function ProductPostForm({product, slug}) {
                         <h1 className="block mt-5 mb-2">Media</h1>
                         <div className="border-dashed border-2 border-gray-500 p-4 rounded-md flex flex-col items-center justify-center">
                             <div className="flex md:flex-row md:gap-6 gap-2 flex-col">
-                                <button className="bg-gray-100 py-2 px-4 rounded-md mb-2 hover:bg-gray-200" onClick={() => document.getElementById('file-input').click()}>
+                                <button type="button" onClick={() => document.getElementById('file-input').click()} className="bg-gray-100 py-2 px-4 rounded-md mb-2 hover:bg-gray-200">
                                     Upload File
                                 </button>
                                 <p className="text-gray-500 mt-2">Acceptable image types: JPEG, JPG, PNG, GIF</p>
                             </div>
-                            <Input  
+                            <input
+                                id="file-input"
                                 type="file" 
                                 accept="image/png, image/jpg, image/jpeg, image/gif"
-                                className="hidden" 
+                                onInput={() => setTimeout(() => setMsg(true), 1500)}
+                                className="hidden"
                                 {...register("image", { required: !product })}
                             />
+                            {product ? (
+                                null
+                            ) : (
+                                msg ? <span className="text-green-500">Image Uploaded Successfully</span> : <span className="text-orange-500">No Image Selected</span>
+                            )}
                             {product && <img className="h-1/4 w-1/4 rounded-lg mt-7" src={service.getFilePreview(product.featuredImage)} alt={product.title} />}
+                            {errors.image && <span className="font-semibold text-red-500 mt-2">Image is required</span>}
                         </div>
                     </div>
 
                     <div className="ml-20 mt-8 px-5 py-4 bg-white border border-slate-300 rounded-xl">
                         <h1 className="text-xl font-semibold mb-5">Pricing</h1>
                         <label htmlFor="price">Price</label>
-                        <div className="flex items-center mt-1 border w-full border-slate-500 rounded-lg">
+                        <div className="mb-1 flex items-center mt-1 border w-full border-slate-500 rounded-lg">
                             <span className="ml-1 px-1 font-semibold">$</span>
                             <Input
                                 id="price"
-                                type="text" 
+                                type="number" 
                                 className="text-sm text-[#4b4b4b] w-full rounded-lg outline-none px-[2px] py-1"
                                 maxLength='24'
                                 placeholder="0.00"
                                 {...register('price', {required: true})}
                             />
                         </div>
+                        {errors.price && <span className="font-semibold text-red-500">Price is required</span>}
                     </div>
                 </div>
 
@@ -158,29 +167,35 @@ function ProductPostForm({product, slug}) {
                         <h1 className="text-xl font-semibold mb-2">Status</h1>
                         <div className="custom-select">
                             <Select
+                                options={['Active', 'Inactive']}
                                 className="cursor-pointer w-full text-lg outline-none border border-slate-500 rounded-lg px-2 py-2 text-[#303030]"
-                                {...register("status", { required: !product })}d
-                                defaultValue={`active`}
+                                {...register("status", { required: !product })}
                             />
                         </div>
                     </div>
 
                     <div className="bg-white border border-slate-300 rounded-xl px-5 py-4 mr-12">
-                        <h1 className="text-xl font-semibold mb-3">Inventory</h1>
-                        <div className="flex items-center">
-                            <label htmlFor="quantity" className="text-sm font-semibold">Quantity</label>
+                        <h1 className="text-xl font-semibold mb-5">Inventory</h1>
+                        <div className="flex items-center mb-1">
+                            <h4 className="text-base pr-3">Quantity</h4>
                             <Input
-                                id="quantity"
                                 type="number"
-                                className="text-sm text-[#4b4b4b] w-full rounded-lg outline-none px-[2px] py-1"
-                                maxLength='24'
-                                placeholder="0"
-                                {...register('quantity', {required: true})}
+                                className="border border-slate-500 text-sm text-[#4b4b4b] w-full rounded-lg outline-none px-2 py-[6px]"
+                                placeholder={0}
+                                {...register('quantity', {
+                                    required: true,
+                                })}
                             />
                         </div>
+                        {errors.quantity && <span className="font-semibold text-red-500">Quantity is required</span>}
                     </div>
 
+                    <button type="submit" className="flex justify-center bg-white font-semibold items-center py-2 mr-12 border-slate-500 text-black border rounded-lg">
+                        {product ? 'Update Product' : 'Save Product'}
+                    </button>
+
                 </div>
+
 
             </form>
         </div>
@@ -188,9 +203,3 @@ function ProductPostForm({product, slug}) {
 }
 
 export default ProductPostForm;
-
-
-
-    // <Button type="submit" bgcolor={product ? "bg-green-500" : undefined} className="w-full">
-    //     {product ? "Update" : "Save"}
-    // </Button>

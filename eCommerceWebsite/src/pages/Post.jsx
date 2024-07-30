@@ -21,10 +21,10 @@ export default function Post() {
                 if (product) {
                     setProduct(product)
                 } else {
-                    navigate("/")
+                    navigate("/seller-dashboard-products")
                 };
             });
-        } else navigate("/");
+        } else navigate("/seller-dashboard-products");
     }, [slug, navigate]);
 
     const deleteProduct = () => {
