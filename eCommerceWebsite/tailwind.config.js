@@ -8,7 +8,8 @@ export default {
     extend: {
       fontFamily: {
         poppins: ["Poppins"],
-        inter: ['Inter']
+        inter: ['Inter'],
+        assistant: ["Assistant"],
       },
       shapeRendering: {
         shapeAuto: 'shape-rendering: auto',

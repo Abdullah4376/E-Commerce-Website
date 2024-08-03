@@ -51,6 +51,9 @@ function Header() {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='' />
+            <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap" rel="stylesheet" />
             <header className="h-[13vh] bg-white text-black w-full">
                     <nav className="pt-5 flex justify-between z-50 content-center px-24">
                         <div className="sec-l">

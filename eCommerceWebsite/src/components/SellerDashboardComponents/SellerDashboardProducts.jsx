@@ -121,7 +121,7 @@ function SellerDashboardProducts() {
 
                             <h1 className="col-span-2 font-semibold">{product.title}</h1>
                             <h1 className="col-span-1 font-semibold">{product.status}</h1>
-                            <h1 className="col-span-1 font-semibold">Stock Status</h1>
+                            <h1 className="col-span-1 font-semibold">{product.quantity}</h1>
                             <h1 className="col-span-2 font-semibold">Type</h1>
                             <Link
                                 to={`/product/${product.$id}`} 
