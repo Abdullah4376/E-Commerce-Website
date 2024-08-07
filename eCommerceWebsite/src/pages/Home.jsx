@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     img,
     card1,
@@ -18,8 +18,21 @@ import {
     Brand5,
     Footer
 } from '../components/index.js'
+import { useDispatch, useSelector } from "react-redux";
+import { search } from '../features/productSlice.js'
 
 function Home() {
+
+    const userData = useSelector(state => state.auth.userData);
+    console.log(userData);
+    console.log(au);
+    const [searchQuery, setSearchQuery] = useState('');
+    const dispatch = useDispatch()
+
+    const submitQuery = () => {
+        dispatch(search(searchQuery))
+    }
+
     return(
         <div>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -35,8 +48,8 @@ function Home() {
                     </div>
                     <div id="search" className="flex items-center mt-10">
                         <span className="material-symbols-outlined absolute z-50 ml-[14px] text-[#9B9AA5]">search</span>
-                        <input placeholder="Search E-Coma" type="text" name="s" className="relative rounded-md p-5 pl-11 w-96 h-[60px]" />
-                        <button className="bg-[#5F3AFC] ml-5 text-[#F7F6FF] px-8 py-[18px] rounded-md font-medium hover:bg-black duration-500">Search</button>
+                        <input onChange={e => setSearchQuery(e.target.value)} placeholder="Search E-Coma" type="text" name="s" className="relative rounded-md p-5 pl-11 w-96 h-[60px]" />
+                        <button onClick={submitQuery} className="bg-[#5F3AFC] ml-5 text-[#F7F6FF] px-8 py-[18px] rounded-md font-medium hover:bg-black duration-500">Search</button>
                     </div>
                 </div>
                 <div className="right">

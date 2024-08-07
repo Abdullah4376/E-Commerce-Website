@@ -35,19 +35,21 @@ function Dashboard() {
 
     if (products.length === 0) {
         return (
-            <div className="w-full py-8">
+            <div className="w-full py-8 px-12">
                 <h1>No Products Found!</h1>
             </div>
         )
     }
 
     return (
-        <div className="w-full py-20 px-5 grid grid-cols-3 text-left gap-7 bg-[#F6F6F7]">
-                {products.map(product => (
-                    <div key={product.$id}>
-                        <ProductCard {...product} />
-                    </div>
-                ))}
+        <div className="px-5 py-10 bg-[#F6F6F7]">
+            <div className="w-full grid grid-cols-5 text-left gap-7">
+                    {products.map(product => (
+                        <div key={product.$id} className="col-span-1">
+                            <ProductCard {...product} />
+                        </div>
+                    ))}
+            </div>
         </div>
     )
 }

@@ -5,6 +5,7 @@ const initialState = {
     status: false,
     userData: null,
     userFeaturedImage: null,
+    searchQuery: null
 };
 
 const productSlice = createSlice({
@@ -27,10 +28,14 @@ const productSlice = createSlice({
 
         removeUserProfileImage: (state) => {
             state.userFeaturedImage = null;
+        },
+
+        search: (state, action) => {
+            state.searchQuery = action.payload;
         }
     }
 });
 
-export const {login, logout, addUserProfileImage, removeUserProfileImage} = productSlice.actions;
+export const {login, logout, addUserProfileImage, removeUserProfileImage, search} = productSlice.actions;
 
 export default productSlice.reducer;

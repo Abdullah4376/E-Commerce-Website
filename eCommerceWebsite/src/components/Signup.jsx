@@ -11,11 +11,8 @@ function Signup() {
     const navigate = useNavigate();
     const dispatch  = useDispatch();
     const {register, handleSubmit, formState: { errors }} = useForm();
-    const [error, setError] = useState();
     
     const signup = async (data) => {
-        
-        setError('');
         try {
             const session = await authService.signup(data);
             if (session) {
@@ -26,7 +23,7 @@ function Signup() {
                 navigate('/dashboard')
             }
         } catch (error) {
-            setError(error.message);
+            console.log(error.message);
         }
     }
     
@@ -43,7 +40,6 @@ function Signup() {
                         Login
                     </Link>
                 </p>
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
                 <form onSubmit={handleSubmit(signup)}>
                     <div className="space-y-5">
                         <Input
@@ -53,9 +49,19 @@ function Signup() {
                         {...register('name', {
                             required: true
                         })}
-                        on
                         />
                         {errors.name && <span className="text-red-500">Name is required</span>}
+                        
+                        
+                        <Input
+                        label='Brand Name: '
+                        placeholder='Enter your Brand Name'
+                        type='text'
+                        {...register('brandName', {
+                            required: true
+                        })}
+                        />
+                        {errors.brandName && <span className="text-red-500">A Brand Name is required</span>}
                         
 
                         <Input

@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: { errors }} = useForm();
     const [error, setError] = useState('');
 
     const login = async (data) => {
@@ -52,6 +52,18 @@ function Login() {
                             matchPattern: (value) => /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || 'Email Address must be a Valid Address!'
                         })}
                         />
+                        {errors.email && <p className="text-red-600 mt-8 text-center">Email Address must be a Valid Address!</p>}
+                        
+                        
+                        <Input
+                        label='Brand Name: ' 
+                        type='text' 
+                        placeholder='Enter your Brand Name'
+                        {...register('brandName', {
+                            required: true,
+                        })}
+                        />
+                        {errors.brandName && <p className="text-red-600 mt-8 text-center">A Brand Name is Required!</p>}
 
                         <Input 
                         label='Password: ' 
@@ -62,6 +74,7 @@ function Login() {
                             matchPattern: (value) => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(value) || 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number!'
                         })}
                         />
+                        {errors.password && <p className="text-red-600 mt-8 text-center">Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number!</p>}
 
                         <Button
                         type="submit"
