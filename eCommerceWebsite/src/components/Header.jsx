@@ -14,11 +14,6 @@ function Header() {
             active: true
         },
         {
-            name: 'All Products',
-            slug: '/dashboard',
-            active: authStatus
-        },
-        {
             name: 'Profile',
             slug: '/profile',
             active: authStatus
@@ -46,7 +41,7 @@ function Header() {
     ]
 
     return(
-        <div className="fixed top-0 z-50 w-full overflow-hidden shadow-md">
+        <div className="fixed top-0 z-[100] w-full overflow-hidden shadow-md">
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />

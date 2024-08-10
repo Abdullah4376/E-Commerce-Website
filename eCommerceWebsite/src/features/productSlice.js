@@ -31,6 +31,7 @@ const productSlice = createSlice({
         },
 
         search: (state, action) => {
+            console.log('Search Successfull!');
             state.searchQuery = action.payload;
         }
     }

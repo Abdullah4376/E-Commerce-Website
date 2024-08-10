@@ -6,14 +6,12 @@ function ProductCard({$id, title, featuredImage}) {
     return(
         <>
                 <div className="p-3 rounded-md group shadow-[#b6b6b6] shadow-2xl mb-2 min-h-72 cursor-pointer">
+                    <Link to={`/product/${$id}`}>
                         <div className="overflow-hidden relative">
                             
-                            <img src={service.getFilePreview(featuredImage)} alt={title} className="min-h-52 max-h-52 min-w-full rounded-md group-hover:scale-110 group-hover:brightness-50 duration-500"/>
+                            <img src={service.getFilePreview(featuredImage)} alt={title} className="min-h-52 max-h-52 min-w-full rounded-md group-hover:scale-110 group-hover:brightness-90 duration-300"/>
 
-                            <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0 duration-500 group-hover:opacity-100 text-center">
-                                <Link to={`/product/${$id}`} className="px-4 duration-500 rounded-md py-2 font-normal bg-white mb-3 hover:text-white hover:bg-[#5F3AFC]">Buy Now</Link>
-                                <button className="font-normal px-7 mt-3 py-1 border-2 rounded-md text-white duration-500 hover:bg-[#5F3AFC] hover:border-[#5F3AFC]">Save</button>
-                            </div>
+                            
 
                         </div>
 
@@ -23,9 +21,10 @@ function ProductCard({$id, title, featuredImage}) {
                         {/* </div> */}
 
                         <div className="">
-                            <h1 className="text-sm"></h1>
+                            <h1 className="text-sm">{title}</h1>
                             {/* <p className="text-sm text-[#55545B]">{`by ${brand}`}</p> */}
                         </div>
+                    </Link>
 
                 </div>
         </>

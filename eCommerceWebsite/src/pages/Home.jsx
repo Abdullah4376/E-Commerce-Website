@@ -18,19 +18,22 @@ import {
     Brand5,
     Footer
 } from '../components/index.js'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { search } from '../features/productSlice.js'
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-
-    const userData = useSelector(state => state.auth.userData);
-    console.log(userData);
-    console.log(au);
     const [searchQuery, setSearchQuery] = useState('');
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitQuery = () => {
-        dispatch(search(searchQuery))
+        if (searchQuery) {
+            dispatch(search(searchQuery));
+            navigate('/dashboard');
+        } else {
+            alert('Cannnot search without a Search Query')
+        }
     }
 
     return(
@@ -48,7 +51,7 @@ function Home() {
                     </div>
                     <div id="search" className="flex items-center mt-10">
                         <span className="material-symbols-outlined absolute z-50 ml-[14px] text-[#9B9AA5]">search</span>
-                        <input onChange={e => setSearchQuery(e.target.value)} placeholder="Search E-Coma" type="text" name="s" className="relative rounded-md p-5 pl-11 w-96 h-[60px]" />
+                        <input onChange={e => setSearchQuery(e.target.value)} placeholder="Pet Toys" type="text" name="s" className="relative rounded-md p-5 pl-11 w-96 h-[60px]" />
                         <button onClick={submitQuery} className="bg-[#5F3AFC] ml-5 text-[#F7F6FF] px-8 py-[18px] rounded-md font-medium hover:bg-black duration-500">Search</button>
                     </div>
                 </div>

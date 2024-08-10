@@ -1,25 +1,54 @@
 import React, { useEffect, useState } from "react";
-import service from "../appwrite/config.js";
+import service, { Service } from "../appwrite/config.js";
 import { ProductCard } from "../components/index.js";
+import { Query } from "appwrite";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const searchData = useSelector(state => state.auth.searchQuery);
+    const [inputValue, setInputValue] = useState(searchData ? searchData : '');
+
+    const fetchAllProducts = async () => {
+        try {
+            const response = await service.getProducts([
+                Query.notEqual('status', 'inactive')
+            ]);
+            setProducts(response.documents);
+            console.log(products);
+        } catch (e) {
+            console.error("Error fetching products:", e);
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await service.getProducts();
-                setProducts(response.documents);
-                console.log(products);
-            } catch (e) {
-                console.error("Error fetching products:", e);
-            } finally {
-                setTimeout(() => setLoading(false), 800);
-            }
+        if (searchData) {
+            searchProducts();
+        } else if (inputValue) {
+            searchProducts();
+        } else {
+            fetchAllProducts();
         }
-        fetchProducts();
-    }, [])
+    }, []);
+
+    const searchProducts = async () => {
+        setLoading(true);
+        try {
+            const response = await service.getProducts([
+                Query.search('title', inputValue),
+                Query.notEqual('status', 'inactive')
+            ]);
+            setProducts(response.documents);
+        } catch (error) {
+            console.log('Error while searching products', error);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -35,14 +64,64 @@ function Dashboard() {
 
     if (products.length === 0) {
         return (
-            <div className="w-full py-8 px-12">
+            <div className="w-full py-10 px-5 bg-[#F6F6F7] min-h-screen">
+                <div className="flex justify-center items-center">
+                    <div id="search" className="w-2/3 flex items-center mb-10">
+                        <label htmlFor="searchField" className=" cursor-pointer material-symbols-outlined absolute z-50 ml-[14px] text-[#9B9AA5]">search</label>
+                        <div className="w-full flex items-center relative">
+                            <input 
+                                onChange={(e) => setInputValue(e.target.value)} 
+                                value={inputValue} 
+                                placeholder="Pet Toys" 
+                                id="searchField" 
+                                type="text" 
+                                className="rounded-md p-5 pl-11 w-full h-[60px]"
+                            />
+                            {
+                                inputValue ? <span 
+                                                style={{fontSize: 18}} 
+                                                onClick={() => setInputValue('')} 
+                                                className="p-[3px] cursor-pointer bg-gray-600 text-white font-bold material-symbols-outlined z-50 absolute right-[14px] rounded-full"
+                                            >
+                                                close
+                                            </span> : null
+                            }
+                        </div>
+                        <button onClick={searchProducts} className="bg-[#5F3AFC] ml-5 text-[#F7F6FF] px-8 py-[18px] rounded-md font-medium hover:bg-black duration-500">Search</button>
+                    </div>
+                </div>
                 <h1>No Products Found!</h1>
             </div>
         )
     }
 
     return (
-        <div className="px-5 py-10 bg-[#F6F6F7]">
+        <div className="px-5 py-10 bg-[#F6F6F7] min-h-screen">
+            <div className="flex justify-center items-center">
+                <div id="search" className="w-2/3 flex items-center mb-10">
+                    <label htmlFor="searchField" className=" cursor-pointer material-symbols-outlined absolute z-50 ml-[14px] text-[#9B9AA5]">search</label>
+                    <div className="w-full flex items-center relative">
+                        <input 
+                            onChange={(e) => setInputValue(e.target.value)} 
+                            value={inputValue} 
+                            placeholder="Pet Toys" 
+                            id="searchField" 
+                            type="text" 
+                            className="rounded-md p-5 pl-11 w-full h-[60px]"
+                        />
+                        {
+                            inputValue ? <span 
+                                            style={{fontSize: 18}} 
+                                            onClick={() => setInputValue('')} 
+                                            className="p-[3px] cursor-pointer bg-gray-600 text-white font-bold material-symbols-outlined z-50 absolute right-[14px] rounded-full"
+                                        >
+                                            close
+                                        </span> : null
+                        }
+                    </div>
+                    <button onClick={searchProducts} className="bg-[#5F3AFC] ml-5 text-[#F7F6FF] px-8 py-[18px] rounded-md font-medium hover:bg-black duration-500">Search</button>
+                </div>
+            </div>
             <div className="w-full grid grid-cols-5 text-left gap-7">
                     {products.map(product => (
                         <div key={product.$id} className="col-span-1">
