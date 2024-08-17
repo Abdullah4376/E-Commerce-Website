@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     status: false,
     userData: null,
-    userFeaturedImage: null,
+    userFeaturedImage: '',
     searchQuery: null,
     brand: null,
 };
@@ -34,10 +34,12 @@ const productSlice = createSlice({
 
         addUserProfileImage : (state, action) => {
             state.userFeaturedImage = action.payload;
+            localStorage.setItem('userFeaturedImage', state.userFeaturedImage);
         },
 
         removeUserProfileImage: (state) => {
-            state.userFeaturedImage = null;
+            state.userFeaturedImage = '';
+            localStorage.removeItem('userFeaturedImage');
         },
 
         search: (state, action) => {

@@ -8,18 +8,36 @@ import { useNavigate } from "react-router-dom";
 import { addUserProfileImage } from '../features/productSlice';
 
 function UserProfile() {
-    const userFeaturedImage = useSelector(state => state.auth.userFeaturedImage);
-    const userData = useSelector(state => state.auth.userData);
+    const { userData } = JSON.parse(localStorage.getItem('userData'));
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [userImage, setUserImage] = useState('');
+    
     const [tabOfActiveProducts, setTabOfActiveProducts] = useState([]);
     const [activeTab, setActiveTab] = useState('active');
     const [tabOfInactiveProducts, setTabOfInactiveProducts] = useState([]);
     const [activeVisible, setActiveVisible] = useState('');
     const [inactiveVisible, setInactiveVisible] = useState('hidden');
     const [activeProductId, setActiveProductId] = useState(null);
+
+    const [state, setState] = useState({
+        tabOfActiveProducts: [],
+        activeTab: 'active',
+        tabOfInactiveProducts: [],
+        activeVisible: '',
+        inactiveVisible: 'hidden',
+        activeProductId: null
+    });
+    
     const fileInputRef = useRef(null);
+    
+    let userImage = localStorage.getItem('userFeaturedImage') ? localStorage.getItem('userFeaturedImage') : '';
+
+    const updateState = (newState) => {
+        setState(prevState => ({
+            ...prevState,
+            ...newState
+        }));
+    };
 
     const extractMonthYear = (dateString) => {
         const date = new Date(dateString);
@@ -32,13 +50,13 @@ function UserProfile() {
 
     const uploadUserImage = async (event) => {
         try {
+            userImage = '';
             const file = event.target.files[0];
             const uploadedFile = await service.uploadFile(file);
             if (uploadedFile) {
                 const fileId = uploadedFile.$id;
                 dispatch(addUserProfileImage(fileId));
-                setUserImage(fileId);
-                localStorage.setItem('userFeaturedImage', fileId);
+                userImage = fileId;
             }
         } catch (error) {
             console.log('Error while uploading file at UserProfile.jsx', error);
@@ -53,7 +71,7 @@ function UserProfile() {
                         Query.equal('UserID', userData.$id),
                         Query.notEqual('status', 'inactive')
                     ]);
-                    setTabOfActiveProducts(fetchedProducts.documents);
+                    updateState({ setTabOfActiveProducts: fetchedProducts.documents })
                 }
             } catch (error) {
                 console.log(error);
@@ -68,36 +86,15 @@ function UserProfile() {
                         Query.equal('UserID', userData.$id),
                         Query.equal('status', 'inactive')
                     ]);
-                    setTabOfInactiveProducts(fetchedProducts.documents);
+                    updateState({ setTabOfInactiveProducts: fetchedProducts.documents });
                 }
             } catch (error) {
                 console.log(error);
             }
         };
         fetchInactiveData();
+    }, []);
 
-        // Fetch user image from Redux store or localStorage
-        const storedUserImage = userFeaturedImage || localStorage.getItem('userFeaturedImage');
-        if (storedUserImage) {
-            setUserImage(storedUserImage);
-        } else {
-            setUserImage(null);
-        }
-    }, [userData, userFeaturedImage]);
-
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
-    // Add an edit button to edit all the information
     // Add an edit button to edit all the information
     // Add an edit button to edit all the information
     // Add an edit button to edit all the information
@@ -152,9 +149,7 @@ function UserProfile() {
                     <header id="tab" className="overflow-hidden border-[1px] border-[#c6c7c9] flex text-left w-[100%] px-5 py-5 font-medium uppercase tracking-tighter bg-white">
                         <h1 
                         onClick={() => {
-                            setActiveVisible('');
-                            setInactiveVisible('hidden');
-                            setActiveTab('active')
+                            updateState({ setActiveVisible: '', setInactiveVisible: 'hidden', setActiveTab: 'active' });
                         }} 
                         className={`${
                             activeTab === "active" ? "text-[#1DBF73]" : ""
@@ -163,9 +158,7 @@ function UserProfile() {
                         </h1>
                         <h1 
                         onClick={() => {
-                            setActiveVisible('hidden');
-                            setInactiveVisible('');
-                            setActiveTab('inactive')
+                            updateState({ setActiveVisible: 'hidden', setInactiveVisible: '', setActiveTab: 'inactive' });
                         }} 
                         className={`${
                             activeTab === "inactive" ? "text-[#1DBF73]" : ""
@@ -183,12 +176,21 @@ function UserProfile() {
                                     </h3>
                                 </Link>
                                 <div className="relative float-left h-full w-full mt-5">
-                                    <span onClick={() => setActiveProductId(activeProductId === product.$id ? null : product.$id)} className={`mx-2 material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80 translate-y-6`} style={{fontSize: 30}}>
+                                    <span 
+                                        onClick={() => updateState({ setActiveProductId: activeProductId === product.$id ? null : product.$id })} 
+                                        className={`mx-2 material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80 translate-y-6`} 
+                                        style={{fontSize: 30}}
+                                    >
                                         more_horiz
                                     </span>
                                     {activeProductId === product.$id && (
                                         <ul className={`bg-white h-full relative -top-[221px]`}>
-                                            <span onClick={() => setActiveProductId(null)}  class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1">cancel</span>
+                                            <span 
+                                            onClick={() => updateState({ setActiveProductId: null })}  
+                                            class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1"
+                                            >
+                                                cancel
+                                            </span>
                                             <Link to={`/edit-product/${product.$id}`}><li className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm"><span style={{fontSize: 20}} className="material-symbols-outlined mr-3">edit</span>Edit</li></Link>
                                             <Link to={`/product/${product.$id}`}><li className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm"><span className="material-symbols-outlined mr-3" style={{fontSize: 20}}>visibility</span>View</li></Link>
                                             <li onClick={async () => {
@@ -217,12 +219,21 @@ function UserProfile() {
                                     </h3>
                                 </Link>
                                 <div className="relative float-left h-full w-full mt-5">
-                                    <span onClick={() => setActiveProductId(activeProductId === product.$id ? null : product.$id)} className={`mx-2 material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80 translate-y-6`} style={{fontSize: 30}}>
+                                    <span 
+                                        onClick={() => updateState({ setActiveProductId: activeProductId === product.$id ? null : product.$id })} 
+                                        className={`mx-2 material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80 translate-y-6`} 
+                                        style={{fontSize: 30}}
+                                    >
                                         more_horiz
                                     </span>
                                     {activeProductId === product.$id && (
                                         <ul className={`bg-white h-full relative -top-[221px]`}>
-                                            <span onClick={() => setActiveProductId(null)}  class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1">cancel</span>
+                                            <span 
+                                                onClick={() => updateState({ setActiveProductId: null })} 
+                                                class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1"
+                                            >
+                                                cancel
+                                            </span>
                                             <Link to={`/edit-product/${product.$id}`}><li className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm"><span style={{fontSize: 20}} className="material-symbols-outlined mr-3">edit</span>Edit</li></Link>
                                             <Link to={`/product/${product.$id}`}><li className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm"><span className="material-symbols-outlined mr-3" style={{fontSize: 20}}>visibility</span>View</li></Link>
                                             <li onClick={() => service.deleteProduct(product.$id).then((status) => status && service.deleteFile(product.featuredImage))} className="cursor-pointer hover:bg-[#F7F7F7] py-3 px-2 flex items-center text-sm absolute bottom-0 w-full border-t border-[#c6c7c9]"><span className="material-symbols-outlined mr-3" style={{fontSize: 20}}>delete</span>Delete</li>
