@@ -57,11 +57,11 @@ function Signup() {
                         label='Brand Name: '
                         placeholder='Enter your Brand Name'
                         type='text'
-                        {...register('brandName', {
+                        {...register('brand', {
                             required: true
                         })}
                         />
-                        {errors.brandName && <span className="text-red-500">A Brand Name is required</span>}
+                        {errors.brand && <span className="text-red-500">A Brand Name is required</span>}
                         
 
                         <Input

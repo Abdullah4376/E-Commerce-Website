@@ -134,6 +134,11 @@ const router = createBrowserRouter([
             path: "/product/:slug",
             element: <Post />,
         },
+
+        {
+            path: "/profile/:slug",
+            element: <UserProfile />,
+        },
     ],
   },
 ])

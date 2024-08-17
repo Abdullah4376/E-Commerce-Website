@@ -19,6 +19,11 @@ function Header() {
             active: authStatus
         },
         {
+            name: 'All Products',
+            slug: '/dashboard',
+            active: authStatus
+        },
+        {
             name: 'Login',
             slug: '/login',
             active: !authStatus

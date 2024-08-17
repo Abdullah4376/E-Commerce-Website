@@ -5,7 +5,8 @@ const initialState = {
     status: false,
     userData: null,
     userFeaturedImage: null,
-    searchQuery: null
+    searchQuery: null,
+    brand: null,
 };
 
 const productSlice = createSlice({
@@ -14,12 +15,21 @@ const productSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.status = true;
-            state.userData = action.payload.userData;
+            state.userData = action.payload;
+            localStorage.setItem('userData', JSON.stringify(state.userData));
+        },
+
+        userBrandName: (state, action) => {
+            state.brand = action.payload;
+            localStorage.setItem('brand', JSON.stringify(state.brand))
         },
 
         logout: (state) => {
             state.status = false;
             state.userData = null;
+            state.searchQuery = null;
+            state.brand = null;
+            localStorage.clear();
         },
 
         addUserProfileImage : (state, action) => {
@@ -37,6 +47,6 @@ const productSlice = createSlice({
     }
 });
 
-export const {login, logout, addUserProfileImage, removeUserProfileImage, search} = productSlice.actions;
+export const {login, logout, addUserProfileImage, removeUserProfileImage, search, userBrandName} = productSlice.actions;
 
 export default productSlice.reducer;

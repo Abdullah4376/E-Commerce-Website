@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
-import { login as storeLogin} from '../features/productSlice'
+import { login as storeLogin, userBrandName} from '../features/productSlice'
 import { Button, Input } from './index'
 import authService from "../appwrite/auth";
 import { useDispatch } from "react-redux";
@@ -21,6 +21,9 @@ function Login() {
                 const userData = await authService.getCurrentUser();
                 if (userData) {
                     dispatch(storeLogin(userData));
+                    authService.getUserBrandName(userData.$id)
+                    .then(document => dispatch(userBrandName(document.brand)))
+                    .catch(error => setError(error));
                 };
                 navigate('/dashboard');
             }
@@ -59,11 +62,11 @@ function Login() {
                         label='Brand Name: ' 
                         type='text' 
                         placeholder='Enter your Brand Name'
-                        {...register('brandName', {
+                        {...register('brand', {
                             required: true,
                         })}
                         />
-                        {errors.brandName && <p className="text-red-600 mt-8 text-center">A Brand Name is Required!</p>}
+                        {errors.brand && <p className="text-red-600 mt-8 text-center">A Brand Name is Required!</p>}
 
                         <Input 
                         label='Password: ' 
