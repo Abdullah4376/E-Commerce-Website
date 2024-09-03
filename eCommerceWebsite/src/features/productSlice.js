@@ -15,13 +15,13 @@ const productSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.status = true;
-            state.userData = action.payload;
-            localStorage.setItem('userData', JSON.stringify(state.userData));
+            state.userData = action.payload;            
+            localStorage.setItem('userData', JSON.stringify(action.payload));
         },
 
         userBrandName: (state, action) => {
             state.brand = action.payload;
-            localStorage.setItem('brand', JSON.stringify(state.brand))
+            localStorage.setItem('brand', JSON.stringify(action.payload))
         },
 
         logout: (state) => {

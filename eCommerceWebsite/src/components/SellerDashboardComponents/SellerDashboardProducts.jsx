@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 function SellerDashboardProducts() {
 
     const [products, setProducts] = useState([]);
-    const userData = useSelector(state => state.auth.userData);
+    const { userData } = JSON.parse(localStorage.getItem('userData'));
     const [loading, setLoading] = useState(true)
 
     const fetchProducts = async () => {

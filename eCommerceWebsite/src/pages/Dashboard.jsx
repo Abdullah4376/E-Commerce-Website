@@ -24,6 +24,15 @@ function Dashboard() {
         }
     }
 
+    // const fetchSellersBrandNames = async () => {
+    //     try {
+    //         products.
+    //     } catch (error) {
+    //         console.log('Cannot fetch Sellers Brand Names', error);
+            
+    //     }
+    // }
+
     useEffect(() => {
         if (searchData) {
             searchProducts();
@@ -34,19 +43,26 @@ function Dashboard() {
         }
     }, []);
 
+    console.log(products);
+    
+
     const searchProducts = async () => {
-        setLoading(true);
-        try {
-            const response = await service.getProducts([
-                Query.search('title', inputValue),
-                Query.notEqual('status', 'inactive')
-            ]);
-            setProducts(response.documents);
-        } catch (error) {
-            console.log('Error while searching products', error);
-        }
-        finally {
-            setLoading(false);
+        if (!inputValue === null && '') {
+            setLoading(true);
+            try {
+                const response = await service.getProducts([
+                    Query.search('title', inputValue),
+                    Query.notEqual('status', 'inactive')
+                ]);
+                setProducts(response.documents);
+            } catch (error) {
+                console.log('Error while searching products', error);
+            }
+            finally {
+                setLoading(false);
+            }
+        } else {
+            alert('A Search Query is required!')
         }
     };
 

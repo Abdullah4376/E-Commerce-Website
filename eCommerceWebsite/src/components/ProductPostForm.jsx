@@ -3,13 +3,14 @@ import { useForm } from 'react-hook-form';
 import { Input, Select } from './index';
 import service from '../appwrite/config';
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import RTE from "./RTE";
 
 function ProductPostForm({product, slug}) {
     const navigate = useNavigate();
     const [msg, setMsg] = useState(false)
-
+    const { userData } = JSON.parse(localStorage.getItem('userData'));
+    const userBrand = JSON.parse(localStorage.getItem('brand'));
+    
     const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm({
         defaultValues: {
             title: product?.title || '',
@@ -18,11 +19,10 @@ function ProductPostForm({product, slug}) {
             status: product?.status || 'Active',
             quantity: product?.quantity || null,
             price: product?.price || null,
-            image: product?.featuredImage || null
+            image: product?.featuredImage || null,
         }
     });
-
-    const userData = useSelector(state => state.auth.userData);
+    
 
     const submit = async (data) => {
         try {
@@ -48,12 +48,14 @@ function ProductPostForm({product, slug}) {
                     data.featuredImage = fileId;
                     dbPost = await service.addProduct({
                         ...data,
-                        UserID: userData.$id
+                        UserID: userData.$id,
+                        brand: userBrand
                     });
                 }
             }
 
             if (dbPost) {
+                console.log(dbPost);
                 navigate(`/product/${dbPost.$id}`);
             } else {
                 console.error('Product creation/update failed. dbPost:', dbPost);

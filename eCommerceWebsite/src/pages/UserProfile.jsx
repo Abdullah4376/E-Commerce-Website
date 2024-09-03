@@ -11,13 +11,6 @@ function UserProfile() {
     const { userData } = JSON.parse(localStorage.getItem('userData'));
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    const [tabOfActiveProducts, setTabOfActiveProducts] = useState([]);
-    const [activeTab, setActiveTab] = useState('active');
-    const [tabOfInactiveProducts, setTabOfInactiveProducts] = useState([]);
-    const [activeVisible, setActiveVisible] = useState('');
-    const [inactiveVisible, setInactiveVisible] = useState('hidden');
-    const [activeProductId, setActiveProductId] = useState(null);
 
     const [state, setState] = useState({
         tabOfActiveProducts: [],
@@ -71,7 +64,7 @@ function UserProfile() {
                         Query.equal('UserID', userData.$id),
                         Query.notEqual('status', 'inactive')
                     ]);
-                    updateState({ setTabOfActiveProducts: fetchedProducts.documents })
+                    updateState({ tabOfActiveProducts: fetchedProducts.documents })
                 }
             } catch (error) {
                 console.log(error);
@@ -86,7 +79,7 @@ function UserProfile() {
                         Query.equal('UserID', userData.$id),
                         Query.equal('status', 'inactive')
                     ]);
-                    updateState({ setTabOfInactiveProducts: fetchedProducts.documents });
+                    updateState({ tabOfInactiveProducts: fetchedProducts.documents });
                 }
             } catch (error) {
                 console.log(error);
@@ -149,25 +142,25 @@ function UserProfile() {
                     <header id="tab" className="overflow-hidden border-[1px] border-[#c6c7c9] flex text-left w-[100%] px-5 py-5 font-medium uppercase tracking-tighter bg-white">
                         <h1 
                         onClick={() => {
-                            updateState({ setActiveVisible: '', setInactiveVisible: 'hidden', setActiveTab: 'active' });
+                            updateState({ activeVisible: '', inactiveVisible: 'hidden', activeTab: 'active' });
                         }} 
                         className={`${
-                            activeTab === "active" ? "text-[#1DBF73]" : ""
+                            state.activeTab === "active" ? "text-[#1DBF73]" : ""
                         } duration-300 hover:text-[#1DBF73] cursor-pointer mr-8`}>
                             Active Products
                         </h1>
                         <h1 
                         onClick={() => {
-                            updateState({ setActiveVisible: 'hidden', setInactiveVisible: '', setActiveTab: 'inactive' });
+                            updateState({ activeVisible: 'hidden', inactiveVisible: '', activeTab: 'inactive' });
                         }} 
                         className={`${
-                            activeTab === "inactive" ? "text-[#1DBF73]" : ""
+                            state.activeTab === "inactive" ? "text-[#1DBF73]" : ""
                         } duration-300 hover:text-[#1DBF73] cursor-pointer`}>
                             Inactive
                         </h1>
                     </header>
-                    <section id="Active" className={`tabContent mt-7 grid grid-cols-3 gap-3 ${activeVisible}`}>
-                        {tabOfActiveProducts.length > 0 && tabOfActiveProducts.map((product, index) => (
+                    <section id="Active" className={`tabContent mt-7 grid grid-cols-3 gap-3 ${state.activeVisible}`}>
+                        {state.tabOfActiveProducts.length > 0 && state.tabOfActiveProducts.map((product, index) => (
                             <div key={index} className="w-[230px] h-[250px] max-h-[250px] overflow-hidden bg-white border-[1px] border-[#c6c7c9]">
                                 <Link to={`/product/${product.$id}`}>
                                     <img className='max-h-[128px] min-h-[128px] w-full' src={service.getFilePreview(product.featuredImage)} alt={product.title} />
@@ -177,16 +170,16 @@ function UserProfile() {
                                 </Link>
                                 <div className="relative float-left h-full w-full mt-5">
                                     <span 
-                                        onClick={() => updateState({ setActiveProductId: activeProductId === product.$id ? null : product.$id })} 
+                                        onClick={() => updateState({ activeProductId: state.activeProductId === product.$id ? null : product.$id })} 
                                         className={`mx-2 material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80 translate-y-6`} 
                                         style={{fontSize: 30}}
                                     >
                                         more_horiz
                                     </span>
-                                    {activeProductId === product.$id && (
+                                    {state.activeProductId === product.$id && (
                                         <ul className={`bg-white h-full relative -top-[221px]`}>
                                             <span 
-                                            onClick={() => updateState({ setActiveProductId: null })}  
+                                            onClick={() => updateState({ activeProductId: null })}  
                                             class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1"
                                             >
                                                 cancel
@@ -209,8 +202,8 @@ function UserProfile() {
                             </div>
                         </div>
                     </section>
-                    <section id="Inactive" className={`tabContent mt-7 grid grid-cols-3 gap-3 ${inactiveVisible}`}>
-                        {tabOfInactiveProducts.length > 0 && tabOfInactiveProducts.map((product, index) => (
+                    <section id="Inactive" className={`tabContent mt-7 grid grid-cols-3 gap-3 ${state.inactiveVisible}`}>
+                        {state.tabOfInactiveProducts.length > 0 && state.tabOfInactiveProducts.map((product, index) => (
                             <div key={index} className="w-[230px] h-[250px] max-h-[250px] overflow-hidden bg-white border-[1px] border-[#c6c7c9]">
                                 <Link to={`/product/${product.$id}`}>
                                     <img className='max-h-[128px] min-h-[128px] w-full' src={service.getFilePreview(product.featuredImage)} alt={product.title} />
@@ -220,16 +213,16 @@ function UserProfile() {
                                 </Link>
                                 <div className="relative float-left h-full w-full mt-5">
                                     <span 
-                                        onClick={() => updateState({ setActiveProductId: activeProductId === product.$id ? null : product.$id })} 
+                                        onClick={() => updateState({ activeProductId: state.activeProductId === product.$id ? null : product.$id })} 
                                         className={`mx-2 material-symbols-outlined opacity-30 cursor-pointer hover:opacity-80 translate-y-6`} 
                                         style={{fontSize: 30}}
                                     >
                                         more_horiz
                                     </span>
-                                    {activeProductId === product.$id && (
+                                    {state.activeProductId === product.$id && (
                                         <ul className={`bg-white h-full relative -top-[221px]`}>
                                             <span 
-                                                onClick={() => updateState({ setActiveProductId: null })} 
+                                                onClick={() => updateState({ activeProductId: null })} 
                                                 class="material-symbols-outlined absolute right-0 mt-[6px] mr-1 cursor-pointer hover:bg-black hover:text-white rounded-full py-1 px-1"
                                             >
                                                 cancel

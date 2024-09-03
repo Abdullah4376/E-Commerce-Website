@@ -155,7 +155,7 @@ const router = createBrowserRouter([
         },
 
         {
-            path: "/seller-profile/:slug",
+            path: "/seller-profile/:sellerId",
             element: <SellerProfile />,
         },
     ],

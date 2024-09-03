@@ -13,7 +13,6 @@ export default function Post() {
 
     const brand = JSON.parse(localStorage.getItem('brand'));
     const { userData } = JSON.parse(localStorage.getItem('userData'));
-    console.log(slug);
     
 
     const openCloseDropdown = () => {
