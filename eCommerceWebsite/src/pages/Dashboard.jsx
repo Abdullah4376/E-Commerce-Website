@@ -24,15 +24,6 @@ function Dashboard() {
         }
     }
 
-    // const fetchSellersBrandNames = async () => {
-    //     try {
-    //         products.
-    //     } catch (error) {
-    //         console.log('Cannot fetch Sellers Brand Names', error);
-            
-    //     }
-    // }
-
     useEffect(() => {
         if (searchData) {
             searchProducts();
@@ -43,11 +34,13 @@ function Dashboard() {
         }
     }, []);
 
-    console.log(products);
+    // console.log(products);
     
 
     const searchProducts = async () => {
-        if (!inputValue === null && '') {
+        if (inputValue === '' || inputValue === null) {
+            alert('A Search Query is required!')
+        } else {
             setLoading(true);
             try {
                 const response = await service.getProducts([
@@ -61,8 +54,6 @@ function Dashboard() {
             finally {
                 setLoading(false);
             }
-        } else {
-            alert('A Search Query is required!')
         }
     };
 
